@@ -7,15 +7,15 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.provisioning.UserDetailsManager;
 import org.springframework.stereotype.Service;
 
-import com.samuraiDigital.adminsystem.data.model.User;
-import com.samuraiDigital.adminsystem.data.repositories.UserRepository;
+import com.samuraiDigital.adminsystem.data.model.UserSecurityDetails;
+import com.samuraiDigital.adminsystem.data.repositories.UserSecurityDetailsRepository;
 
 @Service
 public class JpaUserDetailsManager implements UserDetailsManager{
 
-	private UserRepository userRepository;
+	private UserSecurityDetailsRepository userRepository;
 	
-	public JpaUserDetailsManager(UserRepository userRepository) {
+	public JpaUserDetailsManager(UserSecurityDetailsRepository userRepository) {
 		super();
 		this.userRepository = userRepository;
 	}
@@ -23,13 +23,13 @@ public class JpaUserDetailsManager implements UserDetailsManager{
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		
-		Optional<User> user = userRepository.findByName(username);
+		Optional<UserSecurityDetails> user = userRepository.findByUsername(username);
 		
 		if(user.isEmpty()) {
 			throw new UsernameNotFoundException(username);
 		}
 		
-		return new com.samuraiDigital.adminsystem.security.UserSecurityDetails(user.get());
+		return user.get();
 		
 	}
 
