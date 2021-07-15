@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 import org.springframework.security.core.GrantedAuthority;
 
@@ -32,11 +33,12 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 	private Date accountExpirationDate;
 	private Date credentialsExpirationDate;
 
-	@OneToOne(mappedBy = "user_info")
+	@OneToOne(mappedBy = "userSecurity")
+	@PrimaryKeyJoinColumn
 	private UserInfo user;
 	
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "user_group", 
+	@JoinTable(name = "group_members", 
 		joinColumns = @JoinColumn(name = "id_user"), 
 		inverseJoinColumns = @JoinColumn(name = "id_group"))
 	private Set<SecurityGroup> groups = new HashSet<>();

@@ -3,15 +3,15 @@ package com.samuraiDigital.adminsystem.exceptions;
 import com.samuraiDigital.adminsystem.data.model.Authority;
 import com.samuraiDigital.adminsystem.data.model.SecurityGroup;
 
-public class GroupAlreadyHasAuthority extends RuntimeException{
-
+public class GroupLacksAuthorityException extends RuntimeException {
+	
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private String message;
 	
-	public GroupAlreadyHasAuthority(SecurityGroup group, Authority authority) {
+	public GroupLacksAuthorityException(SecurityGroup group, Authority authority) {
 		
 		super();
 		StringBuilder messageBuilder = new StringBuilder("Group: ");

@@ -8,6 +8,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 @Entity
 public class UserInfo {
@@ -21,6 +22,7 @@ public class UserInfo {
 	private String address;
 	
 	@OneToOne(fetch = FetchType.EAGER)
+	@PrimaryKeyJoinColumn
 	private UserSecurityDetails userSecurity = new UserSecurityDetails();
 
 	public UserInfo() {

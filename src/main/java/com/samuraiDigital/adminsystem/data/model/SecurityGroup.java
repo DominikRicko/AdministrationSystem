@@ -10,8 +10,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-import com.samuraiDigital.adminsystem.exceptions.GroupAlreadyHasAuthority;
-import com.samuraiDigital.adminsystem.exceptions.GroupLacksAuthority;
+import com.samuraiDigital.adminsystem.exceptions.GroupAlreadyHasAuthorityException;
+import com.samuraiDigital.adminsystem.exceptions.GroupLacksAuthorityException;
+import com.samuraiDigital.adminsystem.exceptions.MemberAlreadyInGroupException;
+import com.samuraiDigital.adminsystem.exceptions.MemberNotInGroupException;
 @Entity
 public class SecurityGroup {
 
@@ -21,9 +23,12 @@ public class SecurityGroup {
 	
 	private String name;
 	
-	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "group_authority")
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "groups")
 	private Set<Authority> authorities = new HashSet<>();
 
+	@ManyToMany(fetch = FetchType.EAGER, mappedBy = "groups")
+	private Set<UserSecurityDetails> members = new HashSet<>();
+	
 	public SecurityGroup(String name) {
 		super();
 		this.name = name;
@@ -57,14 +62,32 @@ public class SecurityGroup {
 		this.authorities = authorities;
 	}
 	
+	public Set<UserSecurityDetails> getMembers() {
+		return members;
+	}
+
+	public void setMembers(Set<UserSecurityDetails> members) {
+		this.members = members;
+	}
+
 	public void addAuthority(Authority authority) {
-		if(this.authorities.contains(authority)) throw new GroupAlreadyHasAuthority(this, authority);
+		if(this.authorities.contains(authority)) throw new GroupAlreadyHasAuthorityException(this, authority);
 		this.authorities.add(authority);
 	}
 	
 	public void removeAuthority(Authority authority) {
-		if(!this.authorities.contains(authority)) throw new GroupLacksAuthority(this, authority);
+		if(!this.authorities.contains(authority)) throw new GroupLacksAuthorityException(this, authority);
 		this.authorities.remove(authority);
+	}
+	
+	public void addMember(UserSecurityDetails member) {
+		if(this.members.contains(member)) throw new MemberAlreadyInGroupException(member, this);
+		this.members.add(member);
+	}
+	
+	public void removeMember(UserSecurityDetails member) {
+		if(!this.members.contains(member)) throw new MemberNotInGroupException(member, this);
+		this.members.add(member);
 	}
 	
 }
