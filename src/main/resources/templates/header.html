@@ -8,18 +8,18 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="http://kendo.cdn.telerik.com/2021.2.616/js/kendo.all.min.js"></script>
     <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2021.2.616/styles/kendo.common.min.css">
+    <link rel="stylesheet" href="http://unpkg.com/@progress/kendo-theme-bootstrap/dist/all.css" />
     <title>Header</title>
 </head>
 
 <body>
-    <div th:fragment="header">
-        <div id="header"></div>
+    <th:block th:fragment="header">
+        <div id="header" data-role="appbar" class="k-appbar k-appbar-top k-appbar-sticky k-appbar-light">
+            <div class="k-appbar-section headerLeft"><img id="logo" src="/images/logo.png" alt="Logo"></div>
+            <div class="k-appbar-section headerRight"><button id="btnLogin" class="k-primary" data-role="button">Log in</button></div>
+        </div>
         <script type="text/javascript" th:src="@{/js/header.js}"></script>
-    </div>
-
-    <div>
-        <div>Logo</div>
-    </div>
+    </th:block>
 </body>
 
 </html>
