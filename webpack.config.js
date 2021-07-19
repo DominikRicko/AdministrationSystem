@@ -12,7 +12,8 @@ const stylesHandler = isProduction
 
 const config = {
   entry: {
-    index :"./src/main/ts/index.ts",
+    style : "./src/main/ts/style.ts",
+    index : "./src/main/ts/index.ts",
     header : "./src/main/ts/header.ts",
   },
   output: {

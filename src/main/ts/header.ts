@@ -1,5 +1,3 @@
-import "../style/base.scss";
-
 $(document).ready(function(){
     $("btnLogin").kendoButton();
 })
