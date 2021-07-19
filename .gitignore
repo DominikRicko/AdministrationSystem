@@ -35,3 +35,7 @@ build/
 
 ### NodeJS ###
 node_modules
+
+### javascript in static folder ###
+src/main/resources/static/*.js
+src/main/resources/static/*.js.map

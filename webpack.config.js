@@ -12,11 +12,12 @@ const stylesHandler = isProduction
   : "style-loader";
 
 const config = {
-  entry: [
-    "./src/main/ts/index.ts",
-  ],
-  
+  entry: {
+    index :"./src/main/ts/index.ts",
+    test : "./src/main/ts/test.ts",
+  },
   output: {
+    filename: '[name].js',
     path: path.resolve(__dirname, "src/main/resources/static"),
   },
 
