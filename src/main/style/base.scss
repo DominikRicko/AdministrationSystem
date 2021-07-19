@@ -1,10 +1,26 @@
-body, *{
+html, body{
+    min-height: 100%;
+    height: 0px; //for some reason min-height doesn't work for body without this.
+}
+
+//footer trick
+body{ 
+    display:flex; 
+    flex-direction:column; 
+  }
+  
+  #footer{
+    margin-top:auto; 
+  }
+//end footer trick
+
+*{
     box-sizing: border-box;
     padding: 0;
     margin: 0;
 }
 
-#header{
+#header, #footer{
     width: 100%;
     display: inline-block;
 }
@@ -18,10 +34,10 @@ img{
     height: 80px;
 }
 
-.headerLeft{
+.floatLeft{
     float:left;
 }
 
-.headerRight{
+.floatRight{
     float:right;
 }
