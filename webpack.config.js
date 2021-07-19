@@ -16,6 +16,7 @@ const config = {
     index : "./src/main/ts/index.ts",
     header : "./src/main/ts/header.ts",
     login : "./src/main/ts/login.ts",
+    register : "./src/main/ts/register.ts",
   },
   output: {
     filename: '[name].js',

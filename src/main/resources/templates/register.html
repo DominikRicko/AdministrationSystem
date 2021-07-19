@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="http://kendo.cdn.telerik.com/2021.2.616/js/kendo.all.min.js"></script>
+    <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2021.2.616/styles/kendo.common.min.css">
+    <link rel="stylesheet" href="http://unpkg.com/@progress/kendo-theme-bootstrap/dist/all.css" />
+    <title>AdminSystem | Register</title>
+</head>
+<body>
+    <div th:replace="header :: header" th:remove="tag"></div>
+    <form action="/perform_register" method="post" id="formRegister"></form>
+    <div th:replace="footer :: footer" th:remove="tag"></div>
+    <script src="/js/style.js"></script>
+    <script src="/js/register.js"></script>
+</body>
+</html>

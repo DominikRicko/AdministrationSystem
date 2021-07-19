@@ -20,7 +20,7 @@ $("#formLogin").kendoForm({
     ],
     buttonsTemplate: `
     <button class="k-button k-primary k-form-submit" type="submit">Login</button>
-    <button class="k-button">I forgot my password</button>
-    <button class="k-button">Register</button>
+    <a href="/resetPassword"><button class="k-button" type="button">I forgot my password</button></a>
+    <a href="/register"><button class="k-button" type="button">Register</button></a>
     `
 })
