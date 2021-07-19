@@ -4,7 +4,6 @@
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
-const webpack = require('webpack');
 const isProduction = process.env.NODE_ENV == "production";
 
 const stylesHandler = isProduction
@@ -14,11 +13,11 @@ const stylesHandler = isProduction
 const config = {
   entry: {
     index :"./src/main/ts/index.ts",
-    test : "./src/main/ts/test.ts",
+    header : "./src/main/ts/header.ts",
   },
   output: {
     filename: '[name].js',
-    path: path.resolve(__dirname, "src/main/resources/static"),
+    path: path.resolve(__dirname, "src/main/resources/static/js"),
   },
 
   devtool: "source-map",

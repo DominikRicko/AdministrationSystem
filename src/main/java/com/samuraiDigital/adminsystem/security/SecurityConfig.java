@@ -12,7 +12,12 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.authorizeRequests().anyRequest().authenticated().and().formLogin().and().httpBasic();
+		http.authorizeRequests().antMatchers("/login", "/login.html", "/js/*", "/images/*").permitAll()
+		.anyRequest().authenticated().and()
+		.formLogin().loginPage("/login")
+		.loginProcessingUrl("/perform_login.html").and()
+		.logout().logoutUrl("/perform_logout.html").deleteCookies("JSESSIONID");
+
 	}
 	
 	@Bean
