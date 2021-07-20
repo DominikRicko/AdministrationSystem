@@ -13,7 +13,6 @@ $("#formLogin").kendoForm({
         },
         {
             field: "password",
-            editor: "MaskedTextBox",
             label: "Password: ",
             validation: { required: true }
         }
@@ -23,4 +22,6 @@ $("#formLogin").kendoForm({
     <a href="/resetPassword"><button class="k-button" type="button">I forgot my password</button></a>
     <a href="/register"><button class="k-button" type="button">Register</button></a>
     `
-})
+});
+
+$("#password").attr("type","password");
