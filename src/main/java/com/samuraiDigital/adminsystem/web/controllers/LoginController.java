@@ -8,16 +8,16 @@ public class LoginController {
 
 	@RequestMapping("/login")
 	public String getLogin() {
-		return "login";
+		return "pages/login";
 	}
 	
 	@RequestMapping("/register")
 	public String getRegister() {
-		return "register";
+		return "pages/register";
 	}
 	
 	@RequestMapping("/reset_password")
 	public String getPasswordReset() {
-		return "reset_password";
+		return "pages/reset_password";
 	}
 }
