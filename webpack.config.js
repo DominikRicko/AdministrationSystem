@@ -15,6 +15,7 @@ const config = {
     style : "./src/main/ts/style.ts",
     index : "./src/main/ts/index.ts",
     header : "./src/main/ts/header.ts",
+    footer : "./src/main/ts/footer.ts",
     login : "./src/main/ts/login.ts",
     register : "./src/main/ts/register.ts",
     reset_password : "./src/main/ts/reset_password.ts",
