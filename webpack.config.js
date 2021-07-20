@@ -12,7 +12,6 @@ const stylesHandler = isProduction
 
 const config = {
   entry: {
-    style : "./src/main/ts/style.ts",
     index : "./src/main/ts/index.ts",
     header : "./src/main/ts/header.ts",
     footer : "./src/main/ts/footer.ts",
@@ -31,17 +30,34 @@ const config = {
     rules: [
       {
         test: /\.(ts|tsx)$/i,
-        loader: "ts-loader",
+        use: {
+          loader: "ts-loader",
+          options: {
+            
+          }
+        },
         exclude: ["/node_modules/"],
       },
       {
-        test: /\.css$/i,
-        use: [stylesHandler, "css-loader"],
-      },
-      {
-        test: /\.s[ac]ss$/i,
-        use: [stylesHandler, "css-loader", "sass-loader"],
-      },
+				test: /\.scss$/,
+				use: [
+					{
+						loader: 'file-loader',
+						options: {
+							name: 'css/[name].blocks.css',
+						}
+					},
+					{
+						loader: 'extract-loader'
+					},
+					{
+						loader: 'css-loader'
+					},
+					{
+						loader: 'sass-loader'
+					}
+				]
+			},
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
         type: "asset",
