@@ -20,14 +20,13 @@ $("#formRegister").kendoForm({
         },
         {
             field: "password",
-            editor: "MaskedTextBox",
             label: "Password: ",
             validation: { required: true }
         },
         {
             field: "repeatPassword",
-            editor: "MaskedTextBox",
             label: "Repeat password: ",
+            type: "password",
             validation: { required: true }
         }
     ],
@@ -49,3 +48,6 @@ $("#formRegister").kendoValidator({
         }
     }
 })
+
+$("#repeatPassword").attr("type", "password");
+$("#password").attr("type", "password");
