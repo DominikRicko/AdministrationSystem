@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org" lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -10,11 +11,15 @@
     <link rel="stylesheet" href="http://unpkg.com/@progress/kendo-theme-bootstrap/dist/all.css" />
     <title>AdminSystem | Register</title>
 </head>
+
 <body>
     <div th:replace="header :: header" th:remove="tag"></div>
-    <form action="/perform_register" method="post" id="formRegister"></form>
+    <section id="mainAuthentication">
+        <form action="/perform_register" method="post" id="formRegister"></form>
+    </section>
     <div th:replace="footer :: footer" th:remove="tag"></div>
     <script src="/js/style.js"></script>
     <script src="/js/register.js"></script>
 </body>
+
 </html>

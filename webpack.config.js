@@ -17,6 +17,7 @@ const config = {
     header : "./src/main/ts/header.ts",
     login : "./src/main/ts/login.ts",
     register : "./src/main/ts/register.ts",
+    reset_password : "./src/main/ts/reset_password.ts",
   },
   output: {
     filename: '[name].js',

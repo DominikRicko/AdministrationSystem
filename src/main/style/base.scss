@@ -42,7 +42,10 @@ img{
     float:right;
 }
 
-#formLogin, #formRegister{
+#mainAuthentication{
     width: 50%;
     margin: auto;
+}
+#formResetPassword{
+    margin-top:20px;
 }
