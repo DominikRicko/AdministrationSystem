@@ -7,15 +7,18 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.samuraiDigital.adminsystem.security.model.UserCredentials;
 import com.samuraiDigital.adminsystem.security.services.RegistrationCheckerService;
+import com.samuraiDigital.adminsystem.security.services.RegistrationService;
 
 @Controller
 public class RegistrationController {
 	
 	private RegistrationCheckerService registrationChecker;
+	private RegistrationService registrationService;
 	
-	public RegistrationController(RegistrationCheckerService registrationChecker) {
+	public RegistrationController(RegistrationCheckerService registrationChecker, RegistrationService registrationService) {
 		super();
 		this.registrationChecker = registrationChecker;
+		this.registrationService = registrationService;
 	}
 
 	@PostMapping("/perform_register")
@@ -27,7 +30,7 @@ public class RegistrationController {
 		UserCredentials userCredentials = new UserCredentials(username, email, password);
 		if(this.registrationChecker.Check(userCredentials)) {
 			model.addAttribute("info", "Registration success, check your email for confirmation link.");
-			//registration process goes here.
+			registrationService.register(userCredentials);
 			return "pages/login";
 		}
 		else {
