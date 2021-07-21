@@ -10,14 +10,48 @@ const stylesHandler = isProduction
   ? MiniCssExtractPlugin.loader
   : "style-loader";
 
-const config = {
+const sassConfig = {
+  entry: "./src/main/style/base.scss",
+  output: {
+    path: path.resolve(__dirname, "src/main/resources/static/css"),
+  },
+  devtool: false,
+
+  module: {
+    rules: [
+      {
+        test: /\.scss$/,
+        use: [
+          {
+            loader: 'file-loader',
+            options: {
+              name: 'style.css',
+            }
+          },
+          {
+            loader: 'extract-loader'
+          },
+          {
+            loader: 'css-loader'
+          },
+          {
+            loader: 'sass-loader'
+          }
+        ]
+      },
+    ]
+  }
+
+
+}
+const typescriptConfig = {
   entry: {
-    index : "./src/main/ts/index.ts",
-    header : "./src/main/ts/header.ts",
-    footer : "./src/main/ts/footer.ts",
-    login : "./src/main/ts/login.ts",
-    register : "./src/main/ts/register.ts",
-    reset_password : "./src/main/ts/reset_password.ts",
+    index: "./src/main/ts/index.ts",
+    header: "./src/main/ts/header.ts",
+    footer: "./src/main/ts/footer.ts",
+    login: "./src/main/ts/login.ts",
+    register: "./src/main/ts/register.ts",
+    reset_password: "./src/main/ts/reset_password.ts",
   },
   output: {
     filename: '[name].js',
@@ -33,31 +67,11 @@ const config = {
         use: {
           loader: "ts-loader",
           options: {
-            
+
           }
         },
         exclude: ["/node_modules/"],
       },
-      {
-				test: /\.scss$/,
-				use: [
-					{
-						loader: 'file-loader',
-						options: {
-							name: 'css/[name].blocks.css',
-						}
-					},
-					{
-						loader: 'extract-loader'
-					},
-					{
-						loader: 'css-loader'
-					},
-					{
-						loader: 'sass-loader'
-					}
-				]
-			},
       {
         test: /\.(eot|svg|ttf|woff|woff2|png|jpg|gif)$/i,
         type: "asset",
@@ -74,13 +88,16 @@ const config = {
 
 module.exports = () => {
   if (isProduction) {
-    config.mode = "production";
 
-    config.plugins.push(new MiniCssExtractPlugin());
+    typescriptConfig.mode = "production";
+    sassConfig.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
 
-    config.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
   } else {
-    config.mode = "development";
+
+    typescriptConfig.mode = "development";
   }
-  return config;
+  
+  sassConfig.mode = "production";
+  sassConfig.plugins.push(new MiniCssExtractPlugin());
+  return [typescriptConfig, sassConfig];
 };
