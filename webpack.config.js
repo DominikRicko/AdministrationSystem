@@ -3,17 +3,16 @@
 
 const path = require("path");
 const MiniCssExtractPlugin = require("mini-css-extract-plugin");
-const WorkboxWebpackPlugin = require("workbox-webpack-plugin");
 const isProduction = process.env.NODE_ENV == "production";
-
-const stylesHandler = isProduction
-  ? MiniCssExtractPlugin.loader
-  : "style-loader";
+const RemovePlugin = require('remove-files-webpack-plugin');
 
 const sassConfig = {
-  entry: "./src/main/style/base.scss",
+  entry: {
+    base : "./src/main/style/base.scss",
+  },
   output: {
     path: path.resolve(__dirname, "src/main/resources/static/css"),
+    filename: "junk.js"
   },
   devtool: false,
 
@@ -40,10 +39,20 @@ const sassConfig = {
         ]
       },
     ]
-  }
+  },
 
-
+  plugins: [
+    new RemovePlugin({
+      after: {
+        // expects what your output folder is `dist`.
+        include: [
+          './src/main/resources/static/css/junk.js',
+        ]
+      }
+    })
+  ]
 }
+
 const typescriptConfig = {
   entry: {
     index: "./src/main/ts/index.ts",
@@ -57,19 +66,11 @@ const typescriptConfig = {
     filename: '[name].js',
     path: path.resolve(__dirname, "src/main/resources/static/js"),
   },
-
-  devtool: "source-map",
-
   module: {
     rules: [
       {
         test: /\.(ts|tsx)$/i,
-        use: {
-          loader: "ts-loader",
-          options: {
-
-          }
-        },
+        loader: "ts-loader",
         exclude: ["/node_modules/"],
       },
       {
@@ -84,20 +85,21 @@ const typescriptConfig = {
   resolve: {
     extensions: [".tsx", ".ts", ".js"],
   },
+  plugins: [],
 };
 
 module.exports = () => {
   if (isProduction) {
 
+    sassConfig.mode = "production";
     typescriptConfig.mode = "production";
-    sassConfig.plugins.push(new WorkboxWebpackPlugin.GenerateSW());
+    sassConfig.plugins.push(new MiniCssExtractPlugin());
 
   } else {
-
+    sassConfig.mode = "development";
     typescriptConfig.mode = "development";
+    typescriptConfig.devtool = "source-map";
   }
   
-  sassConfig.mode = "production";
-  sassConfig.plugins.push(new MiniCssExtractPlugin());
   return [typescriptConfig, sassConfig];
 };
