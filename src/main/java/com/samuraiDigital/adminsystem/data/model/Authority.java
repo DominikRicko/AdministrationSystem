@@ -20,7 +20,7 @@ import com.samuraiDigital.adminsystem.exceptions.GroupLacksAuthorityException;
 
 @Entity
 public class Authority implements GrantedAuthority {
-	
+
 	/**
 	 * 
 	 */
@@ -29,16 +29,14 @@ public class Authority implements GrantedAuthority {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	
+
 	private String name;
-	
+
 	@Lob
 	private String description;
-	
+
 	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "group_authority",
-		joinColumns = @JoinColumn(name = "id_authority"),
-		inverseJoinColumns = @JoinColumn(name = "id_group"))
+	@JoinTable(name = "group_authority", joinColumns = @JoinColumn(name = "id_authority"), inverseJoinColumns = @JoinColumn(name = "id_group"))
 	private Set<SecurityGroup> groups = new HashSet<SecurityGroup>();
 
 	public Authority() {
@@ -82,21 +80,22 @@ public class Authority implements GrantedAuthority {
 	public void setGroups(Set<SecurityGroup> groups) {
 		this.groups = groups;
 	}
-	
+
 	public void addGroup(SecurityGroup group) {
-		if(this.groups.contains(group)) throw new GroupAlreadyHasAuthorityException(group, this);
+		if (this.groups.contains(group))
+			throw new GroupAlreadyHasAuthorityException(group, this);
 		this.groups.add(group);
 	}
-	
+
 	public void removeGroup(SecurityGroup group) {
-		if(!this.groups.contains(group)) throw new GroupLacksAuthorityException(group, this);
+		if (!this.groups.contains(group))
+			throw new GroupLacksAuthorityException(group, this);
 		this.groups.remove(group);
 	}
-	
+
 	@Override
 	public String getAuthority() {
 		return name;
 	}
 
-	
 }
