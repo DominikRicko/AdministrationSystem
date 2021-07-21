@@ -28,6 +28,7 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 	@Id
 	private Long id;
 	private String username;
+	private String email;
 	private String passwordHash;
 	private Boolean enabled;
 	private Date accountExpirationDate;
@@ -133,5 +134,12 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 		this.enabled = enabled;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 }

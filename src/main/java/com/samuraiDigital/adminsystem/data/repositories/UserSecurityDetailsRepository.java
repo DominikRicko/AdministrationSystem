@@ -9,5 +9,7 @@ import com.samuraiDigital.adminsystem.data.model.UserSecurityDetails;
 public interface UserSecurityDetailsRepository extends CrudRepository<UserSecurityDetails, Long>{
 	
 	Optional<UserSecurityDetails> findByUsername(String username);
+
+	Optional<UserSecurityDetails> findByEmail(String email);
 	
 }
