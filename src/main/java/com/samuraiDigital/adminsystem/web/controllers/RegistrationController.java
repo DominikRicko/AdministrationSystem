@@ -32,6 +32,7 @@ public class RegistrationController {
 			model.addAttribute("info", "Registration success, check your email for confirmation link.");
 			registrationService.register(userCredentials);
 			//TODO: Send email to user about registration confirmation
+
 			return "pages/login";
 		}
 		else {

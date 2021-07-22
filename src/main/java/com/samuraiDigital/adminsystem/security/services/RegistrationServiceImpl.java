@@ -26,6 +26,7 @@ public class RegistrationServiceImpl implements RegistrationService{
 	public void register(UserCredentials userCredentials) {
 		
 		UserSecurityDetails newUser = new UserSecurityDetails();
+    
 		//TODO: change enabled to false after email sending service is done.
 		newUser.setEmail(userCredentials.getEmail());
 		newUser.setUsername(userCredentials.getUsername());
