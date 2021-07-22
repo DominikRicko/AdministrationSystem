@@ -9,6 +9,8 @@ import java.util.stream.Collectors;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -26,8 +28,10 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String username;
+	private String email;
 	private String passwordHash;
 	private Boolean enabled;
 	private Date accountExpirationDate;
@@ -43,6 +47,10 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 		inverseJoinColumns = @JoinColumn(name = "id_group"))
 	private Set<SecurityGroup> groups = new HashSet<>();
 
+	public UserSecurityDetails() {
+		super();
+	}
+	
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		
@@ -133,5 +141,12 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 		this.enabled = enabled;
 	}
 
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 
 }
