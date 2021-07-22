@@ -31,6 +31,8 @@ public class RegistrationController {
 		if(this.registrationChecker.Check(userCredentials)) {
 			model.addAttribute("info", "Registration success, check your email for confirmation link.");
 			registrationService.register(userCredentials);
+			//TODO: Send email to user about registration confirmation
+
 			return "pages/login";
 		}
 		else {
