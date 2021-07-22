@@ -26,13 +26,13 @@ public class RegistrationServiceImpl implements RegistrationService{
 	public void register(UserCredentials userCredentials) {
 		
 		UserSecurityDetails newUser = new UserSecurityDetails();
-		
+		//TODO: change enabled to false after email sending service is done.
 		newUser.setEmail(userCredentials.getEmail());
 		newUser.setUsername(userCredentials.getUsername());
 		newUser.setPasswordHash(encoder.encode(userCredentials.getPassword()));
-		newUser.setEnabled(false);
-		newUser.setAccountExpirationDate(Date.valueOf(LocalDateTime.now().plusDays(1).toLocalDate()));
-		newUser.setCredentialsExpirationDate(Date.valueOf(LocalDateTime.now().plusDays(1).toLocalDate()));
+		newUser.setEnabled(true);
+		newUser.setAccountExpirationDate(Date.valueOf(LocalDateTime.now().plusDays(30).toLocalDate()));
+		newUser.setCredentialsExpirationDate(Date.valueOf(LocalDateTime.now().plusDays(30).toLocalDate()));
 		
 		userRepository.save(newUser);
 		
