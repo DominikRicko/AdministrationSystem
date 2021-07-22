@@ -39,3 +39,8 @@ node_modules
 ### generated files in static folder ###
 src/main/resources/static/js
 src/main/resources/static/css
+
+### Generated dependency programs ###
+MySQL
+rabbitmq/data
+rabbitmq/logs
