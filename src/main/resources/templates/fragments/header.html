@@ -16,12 +16,18 @@
 <body>
     <th:block th:fragment="header">
         <div id="header" data-role="appbar" class="k-appbar k-appbar-top k-appbar-sticky k-appbar-light">
-            <div class="k-appbar-section floatLeft appbarElement"><img id="logo" src="/images/logo.png" alt="Logo">
+            <div class="k-appbar-section floatLeft appbarElement">
+                <a href="/index"><img id="logo" src="/images/logo.png" alt="Logo"></a>
             </div>
-            <div class="k-appbar-section floatLeft appbarElement"><a class="appbarText" href="/profile">Profile</a>
+            <div class="k-appbar-section floatLeft appbarElement">
+                <a class="appbarText" href="/profile">Profile</a>
             </div>
-            <div class="k-appbar-section floatLeft appbarElement"><a class="appbarText" href="/users">Users</a></div>
-            <div class="k-appbar-section floatLeft appbarElement"><a class="appbarText" href="/groups">Groups</a></div>
+            <div class="k-appbar-section floatLeft appbarElement">
+                <a class="appbarText" href="/users">Users</a>
+            </div>
+            <div class="k-appbar-section floatLeft appbarElement">
+                <a class="appbarText" href="/groups">Groups</a>
+            </div>
             <div class="k-appbar-section floatLeft appbarElement">
                 <a class="appbarText" href="/privileges">Privileges</a>
             </div>

@@ -46,8 +46,13 @@ public class UserResource{
 		return birthdate;
 	}
 
-	public Collection<String> getGroups() {
-		return groups;
+	public String getGroups() {
+		
+		StringBuilder builder = new StringBuilder();
+		
+		groups.forEach(it -> builder.append(it).append("\n"));
+		
+		return builder.toString();
 	}
 
 	public String getEmail() {
