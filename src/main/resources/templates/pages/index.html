@@ -17,8 +17,12 @@
 
 <body>
 
+	<div th:replace="/fragments/header :: header" th:remove="tag"></div>
+
 	<div id="test">Hello World</div>
 
+	<div th:replace="/fragments/footer :: footer" th:remove="tag"></div>
+	
 	<script src="/js/index.js"></script>
 
 </body>
