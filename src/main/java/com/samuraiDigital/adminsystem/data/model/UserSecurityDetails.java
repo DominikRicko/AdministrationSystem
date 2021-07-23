@@ -4,6 +4,7 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -121,8 +122,8 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 		this.credentialsExpirationDate = credentialsExpirationDate;
 	}
 
-	public UserInfo getUser() {
-		return user;
+	public Optional<UserInfo> getUser() {
+		return Optional.ofNullable(user);
 	}
 
 	public void setUser(UserInfo user) {
