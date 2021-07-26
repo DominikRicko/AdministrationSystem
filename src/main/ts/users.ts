@@ -27,6 +27,11 @@ $("#grid").kendoGrid({
             width: '25%',
         },
         {
+            field: 'username',
+            title: 'Username',
+            width: '25%',
+        },
+        {
             field: 'enabled',
             title: 'Enable',
             width: '10%',
@@ -51,7 +56,7 @@ $("#grid").kendoGrid({
         }
     ],
     dataSource: {
-       transport:{
+        transport:{
            read: {
                 url: "/getUsers",
                 data: {
@@ -59,12 +64,17 @@ $("#grid").kendoGrid({
                 }
             },
             create: {
-                url: "/createUsers",
-                type: "POST",
+                url: "/createUser",
+                type: "PUT",
             },
             destroy: {
-                url: "/removeUsers",
-                type: "POST",
+                url: "/removeUser",
+                type: "DELETE",
+                
+            },
+            update: {
+                url: "/updateUser",
+                type: "UPDATE",
             },
             batch: true,
        },
@@ -78,6 +88,7 @@ $("#grid").kendoGrid({
                    birthdate: {type: 'date'},
                    groups: {type: 'string'},
                    email: {type: 'string'},
+                   username: {type: 'string'},
                    enabled: {type: 'boolean'},
                    account_expiration_date: {type: 'date'},
                    credentials_expiration_date: {type: 'date'},

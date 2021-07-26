@@ -1,12 +1,15 @@
 package com.samuraiDigital.adminsystem.data.model;
 
-import java.sql.Date;
+import java.time.LocalDate;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
+
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 
 @Entity
 public class UserInfo {
@@ -15,18 +18,19 @@ public class UserInfo {
 	private Long id;
 	private String name;
 	private String surname;
-	private Date birthdate;
+	private LocalDate birthdate;
 	private String address;
 	
 	@OneToOne(fetch = FetchType.EAGER)
 	@PrimaryKeyJoinColumn
+	@Cascade(CascadeType.ALL)
 	private UserSecurityDetails userSecurity = new UserSecurityDetails();
 
 	public UserInfo() {
 		super();
 	}
 
-	public UserInfo(String name, String surname, Date birthdate, String address) {
+	public UserInfo(String name, String surname, LocalDate birthdate, String address) {
 		super();
 		this.name = name;
 		this.surname = surname;
@@ -58,11 +62,11 @@ public class UserInfo {
 		this.surname = surname;
 	}
 
-	public Date getBirthdate() {
+	public LocalDate getBirthdate() {
 		return birthdate;
 	}
 
-	public void setBirthdate(Date birthdate) {
+	public void setBirthdate(LocalDate birthdate) {
 		this.birthdate = birthdate;
 	}
 

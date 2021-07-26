@@ -1,7 +1,5 @@
 package com.samuraiDigital.adminsystem.web.resources;
 
-import java.io.Serializable;
-import java.sql.Date;
 import java.util.Collection;
 
 public class UserResource{
@@ -9,15 +7,16 @@ public class UserResource{
 	final private Long id;
 	final private String name;
 	final private String surname;
-	final private Date birthdate;
+	final private String birthdate;
 	final private Collection<String> groups;
 	final private String email;
+	final private String username;
 	final private Boolean enabled;
-	final private Date account_expiration_date;
-	final private Date credentials_expiration_date;
+	final private String account_expiration_date;
+	final private String credentials_expiration_date;
 	
-	public UserResource(Long id, String name, String surname, Date birthdate, Collection<String> groups, String email, Boolean enabled,
-			Date account_expiration_date, Date credentials_expiration_date) {
+	public UserResource(Long id, String name, String surname, String birthdate, Collection<String> groups, String email, String username, Boolean enabled,
+			String account_expiration_date, String credentials_expiration_date) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -25,6 +24,7 @@ public class UserResource{
 		this.birthdate = birthdate;
 		this.groups = groups;
 		this.email = email;
+		this.username = username;
 		this.enabled = enabled;
 		this.account_expiration_date = account_expiration_date;
 		this.credentials_expiration_date = credentials_expiration_date;
@@ -42,7 +42,7 @@ public class UserResource{
 		return surname;
 	}
 
-	public Date getBirthdate() {
+	public String getBirthdate() {
 		return birthdate;
 	}
 
@@ -63,12 +63,16 @@ public class UserResource{
 		return enabled;
 	}
 
-	public Date getAccount_expiration_date() {
+	public String getAccount_expiration_date() {
 		return account_expiration_date;
 	}
 
-	public Date getCredentials_expiration_date() {
+	public String getCredentials_expiration_date() {
 		return credentials_expiration_date;
+	}
+
+	public String getUsername() {
+		return username;
 	}
 	
 }
