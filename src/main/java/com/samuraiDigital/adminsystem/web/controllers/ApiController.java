@@ -44,4 +44,14 @@ public class ApiController {
 		return new ResponseEntity<>(null, HttpStatus.OK);
 	}
 	
+	@RequestMapping(method = RequestMethod.POST, path = "/updateUser")
+	public ResponseEntity<UserResource> updateUser(UserResource user){
+		
+		if(resourceService.saveUser(user))
+			return new ResponseEntity<>(user, HttpStatus.OK);
+		else
+			return new ResponseEntity<>(user, HttpStatus.BAD_REQUEST);
+		
+	}
+	
 }

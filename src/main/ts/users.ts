@@ -74,7 +74,7 @@ $("#grid").kendoGrid({
             },
             update: {
                 url: "/updateUser",
-                type: "UPDATE",
+                type: "POST",
             },
             batch: true,
        },
