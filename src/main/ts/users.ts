@@ -98,6 +98,9 @@ $("#grid").kendoGrid({
     },
     scrollable: true,
     selectable: true,
-    toolbar: ["create", "save", "cancel" ],
+    toolbar: ["create", "save", "cancel", "search" ],
     editable: true,
+    filterable: true,
+    groupable: true,
+    sortable: true,
 });

@@ -36,4 +36,12 @@ public class ApiController {
 			
 	}
 	
+	@RequestMapping(method = RequestMethod.DELETE, path = "/removeUser")
+	public ResponseEntity<UserResource> removeUser(UserResource user){
+		
+		resourceService.deleteUserById(user.getId());
+		
+		return new ResponseEntity<>(null, HttpStatus.OK);
+	}
+	
 }

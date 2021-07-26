@@ -160,8 +160,15 @@ public class UserResourceServiceImpl implements UserResourceService {
 
 	@Override
 	public Boolean deleteUserById(Long id) {
-		// TODO Auto-generated method stub
-		return false;
+		try {
+			userInfoRepository.deleteById(id);
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return false;
+		}
+		
+		return true;
 	}
 
 }
