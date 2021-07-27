@@ -1,4 +1,4 @@
-package com.samuraiDigital.adminsystem.web.resources;
+package com.samuraiDigital.adminsystem.api.user;
 
 import java.util.Collection;
 
@@ -84,4 +84,19 @@ public class UserResource {
 				+ ", credentials_expiration_date=" + credentials_expiration_date + "]";
 	}
 
+	public UserResource(Integer id, UserResource original) {
+		super();
+		this.id = id;
+		this.account_expiration_date = original.account_expiration_date;
+		this.birthdate = original.birthdate;
+		this.credentials_expiration_date = original.credentials_expiration_date;
+		this.email = original.email;
+		this.enabled = original.enabled;
+		this.groups = original.groups;
+		this.name = original.name;
+		this.surname = original.surname;
+		this.username = original.username;
+	}
+
+	
 }

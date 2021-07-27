@@ -1,4 +1,4 @@
-package com.samuraiDigital.adminsystem.web.services;
+package com.samuraiDigital.adminsystem.api.user;
 
 import java.text.ParsePosition;
 import java.time.DateTimeException;
@@ -18,7 +18,6 @@ import com.samuraiDigital.adminsystem.data.model.UserSecurityDetails;
 import com.samuraiDigital.adminsystem.data.repositories.SecurityGroupRepository;
 import com.samuraiDigital.adminsystem.data.repositories.UserInfoRepository;
 import com.samuraiDigital.adminsystem.data.repositories.UserSecurityDetailsRepository;
-import com.samuraiDigital.adminsystem.web.resources.UserResource;
 
 @Service
 public class UserResourceServiceImpl implements UserResourceService{
@@ -35,33 +34,38 @@ public class UserResourceServiceImpl implements UserResourceService{
 		this.groupRepository = groupRepository;
 	}
 
+	private UserResource convertToUserResource(UserSecurityDetails user) {
+		Optional<UserInfo> userInfoOptional = user.getUser();
+
+		if (userInfoOptional.isPresent()) {
+			UserInfo userInfo = userInfoOptional.get();
+
+			return new UserResource(user.getId(), userInfo.getName(), userInfo.getSurname(),
+					userInfo.getBirthdate().toString(), user.getGroups().stream().map(it -> it.getName()).toList(),
+					user.getEmail(), user.getUsername(), user.isEnabled(), user.getAccountExpirationDate().toString(),
+					user.getCredentialsExpirationDate().toString());
+		} else {
+			return new UserResource(user.getId(), null, null, null,
+					user.getGroups().stream().map(it -> it.getName()).toList(), user.getEmail(), user.getUsername(), user.isEnabled(),
+					user.getAccountExpirationDate().toString(), user.getCredentialsExpirationDate().toString());
+		}
+	}
+	
 	private Collection<UserResource> convertToUserResources(Iterable<UserSecurityDetails> details) {
 
 		ArrayList<UserResource> resources = new ArrayList<>();
 
 		for (UserSecurityDetails user : details) {
 
-			Optional<UserInfo> userInfoOptional = user.getUser();
-
-			if (userInfoOptional.isPresent()) {
-				UserInfo userInfo = userInfoOptional.get();
-
-				resources.add(new UserResource(user.getId(), userInfo.getName(), userInfo.getSurname(),
-						userInfo.getBirthdate().toString(), user.getGroups().stream().map(it -> it.getName()).toList(),
-						user.getEmail(), user.getUsername(), user.isEnabled(), user.getAccountExpirationDate().toString(),
-						user.getCredentialsExpirationDate().toString()));
-			} else {
-				resources.add(new UserResource(user.getId(), null, null, null,
-						user.getGroups().stream().map(it -> it.getName()).toList(), user.getEmail(), user.getUsername(), user.isEnabled(),
-						user.getAccountExpirationDate().toString(), user.getCredentialsExpirationDate().toString()));
-			}
+			resources.add(convertToUserResource(user));
 
 		}
 
 		return resources;
 	}
 
-	private void saveToRepository(UserResource userResources) {
+	//TODO: Separate updating from creation of new users in this method.
+	private UserResource saveToRepository(UserResource userResources) {
 
 		Optional<UserSecurityDetails> userFromRepo;
 		UserSecurityDetails newUserSecurity;
@@ -120,6 +124,8 @@ public class UserResourceServiceImpl implements UserResourceService{
 
 		newUserInfo.setUserSecurity(newUserSecurity);
 		userInfoRepository.save(newUserInfo);
+		
+		return new UserResource(newUserInfo.getId() ,userResources);
 	}
 
 	@Override
@@ -132,30 +138,27 @@ public class UserResourceServiceImpl implements UserResourceService{
 	}
 
 	@Override
-	public Boolean saveUser(UserResource user) {
+	public Optional<UserResource> getUser(Integer id) {
+		
+		Optional<UserSecurityDetails> user = userDetailsRepository.findById(id);
+		
+		if(user.isPresent())
+			return Optional.of(convertToUserResource(user.get()));
+		else
+			return Optional.ofNullable(null);
+		
+	}
+
+	@Override
+	public Optional<UserResource> saveUser(UserResource user) {
 
 		try {
-			saveToRepository(user);	
-		}
-		catch(DateTimeParseException e) {
-			e.printStackTrace();
-			return false;
-		}
-		catch(DateTimeException e) {
-			e.printStackTrace();
-			return false;
-		}
-		catch(IllegalArgumentException e) {
-			e.printStackTrace();
-			return false;
+			return Optional.of(saveToRepository(user));
 		}
 		catch(Exception e) {
 			e.printStackTrace();
-			return false;
+			return Optional.ofNullable(null);
 		}
-		
-		return true;
-
 	}
 
 	@Override
@@ -169,6 +172,17 @@ public class UserResourceServiceImpl implements UserResourceService{
 		}
 		
 		return true;
+	}
+
+	@Override
+	public Optional<UserResource> updateUser(Integer id, UserResource user) {
+		try {
+			return Optional.of(saveToRepository(user));
+		}
+		catch(Exception e) {
+			e.printStackTrace();
+			return Optional.ofNullable(null);
+		}
 	}
 
 }
