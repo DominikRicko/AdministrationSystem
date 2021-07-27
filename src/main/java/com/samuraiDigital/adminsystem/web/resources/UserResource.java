@@ -4,7 +4,7 @@ import java.util.Collection;
 
 public class UserResource{
 	
-	final private Long id;
+	final private Integer id;
 	final private String name;
 	final private String surname;
 	final private String birthdate;
@@ -15,7 +15,7 @@ public class UserResource{
 	final private String account_expiration_date;
 	final private String credentials_expiration_date;
 	
-	public UserResource(Long id, String name, String surname, String birthdate, Collection<String> groups, String email, String username, Boolean enabled,
+	public UserResource(Integer id, String name, String surname, String birthdate, Collection<String> groups, String email, String username, Boolean enabled,
 			String account_expiration_date, String credentials_expiration_date) {
 		super();
 		this.id = id;
@@ -30,7 +30,7 @@ public class UserResource{
 		this.credentials_expiration_date = credentials_expiration_date;
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 

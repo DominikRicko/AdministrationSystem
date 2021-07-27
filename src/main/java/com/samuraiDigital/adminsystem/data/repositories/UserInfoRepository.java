@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.samuraiDigital.adminsystem.data.model.UserInfo;
 
-public interface UserInfoRepository extends CrudRepository<UserInfo, Long>{
+public interface UserInfoRepository extends CrudRepository<UserInfo, Integer>{
 
 	Optional<UserInfo> findByName(String name);
 	

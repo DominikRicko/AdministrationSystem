@@ -3,6 +3,7 @@ package com.samuraiDigital.adminsystem.data.model;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
@@ -28,11 +29,12 @@ public class Authority implements GrantedAuthority {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 
 	private String name;
 
 	@Lob
+	@Column(columnDefinition = "TEXT")
 	private String description;
 
 	@ManyToMany(fetch = FetchType.LAZY)
@@ -49,11 +51,11 @@ public class Authority implements GrantedAuthority {
 		this.description = description;
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -96,6 +98,19 @@ public class Authority implements GrantedAuthority {
 	@Override
 	public String getAuthority() {
 		return name;
+	}
+
+	@Override
+	public String toString() {
+		
+		StringBuffer buffer = new StringBuffer("Authority: ");
+		
+		if(this.id != null) {
+			buffer.append("Id: ").append(this.id).append(" ");
+		}
+		buffer.append("Name: ").append(this.name);
+		
+		return buffer.toString();
 	}
 
 }

@@ -19,7 +19,7 @@ public class SecurityGroup {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 	
 	private String name;
 	
@@ -38,11 +38,11 @@ public class SecurityGroup {
 		super();
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -88,6 +88,18 @@ public class SecurityGroup {
 	public void removeMember(UserSecurityDetails member) {
 		if(!this.members.contains(member)) throw new MemberNotInGroupException(member, this);
 		this.members.add(member);
+	}
+
+	@Override
+	public String toString() {
+		StringBuffer buffer = new StringBuffer("Security Group: ");
+		
+		if(this.id != null) {
+			buffer.append("Id: ").append(this.id).append(" ");
+		}
+		buffer.append("Name: ").append(this.name);
+		
+		return buffer.toString();
 	}
 	
 }

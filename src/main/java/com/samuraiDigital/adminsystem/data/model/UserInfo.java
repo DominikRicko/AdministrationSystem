@@ -15,7 +15,7 @@ import org.hibernate.annotations.CascadeType;
 public class UserInfo {
 
 	@Id
-	private Long id;
+	private Integer id;
 	private String name;
 	private String surname;
 	private LocalDate birthdate;
@@ -38,11 +38,11 @@ public class UserInfo {
 		this.address = address;
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -84,6 +84,19 @@ public class UserInfo {
 
 	public void setUserSecurity(UserSecurityDetails userSecurity) {
 		this.userSecurity = userSecurity;
+	}
+
+	@Override
+	public String toString() {
+		StringBuffer buffer = new StringBuffer("User information: ");
+		
+		if(this.id != null) {
+			buffer.append("Id: ").append(this.id).append(" ");
+		}
+		buffer.append("Name: ").append(this.name).append(" ");
+		buffer.append("Surname: ").append(this.surname).append(" ");
+		
+		return buffer.toString();
 	}
 	
 }

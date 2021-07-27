@@ -21,7 +21,7 @@ import com.samuraiDigital.adminsystem.data.repositories.UserSecurityDetailsRepos
 import com.samuraiDigital.adminsystem.web.resources.UserResource;
 
 @Service
-public class UserResourceServiceImpl implements UserResourceService {
+public class UserResourceServiceImpl implements UserResourceService{
 
 	private UserSecurityDetailsRepository userDetailsRepository;
 	private UserInfoRepository userInfoRepository;
@@ -159,7 +159,7 @@ public class UserResourceServiceImpl implements UserResourceService {
 	}
 
 	@Override
-	public Boolean deleteUserById(Long id) {
+	public Boolean deleteUserById(Integer id) {
 		try {
 			userInfoRepository.deleteById(id);
 		}

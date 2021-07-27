@@ -8,6 +8,6 @@ public interface UserResourceService {
 
 	Collection<UserResource> getUsers();
 	Boolean saveUser(UserResource user);
-	Boolean deleteUserById(Long id);
+	Boolean deleteUserById(Integer id);
 	
 }

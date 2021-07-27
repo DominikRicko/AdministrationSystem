@@ -31,7 +31,7 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 	private String username;
 	private String email;
 	private String passwordHash;
@@ -92,11 +92,11 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 		return this.enabled;
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -154,6 +154,19 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 	
 	public void addGroup(SecurityGroup group) {
 		this.groups.add(group);
+	}
+
+	@Override
+	public String toString() {
+		StringBuffer buffer = new StringBuffer("User Security Details: ");
+		
+		if(this.id != null) {
+			buffer.append("Id: ").append(this.id).append(" ");
+		}
+		buffer.append("Name: ").append(this.username).append(" ");
+		buffer.append("Email").append(this.email).append(" ");
+		
+		return buffer.toString();
 	}
 
 }
