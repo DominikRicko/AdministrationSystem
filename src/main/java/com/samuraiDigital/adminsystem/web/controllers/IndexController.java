@@ -11,4 +11,9 @@ public class IndexController {
 		return "/pages/index";
 	}
 	
+	@RequestMapping({"/users"})
+	public String users() {
+		return "/pages/users";
+	}
+	
 }

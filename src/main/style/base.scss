@@ -1,28 +1,12 @@
-html, body{
-    min-height: 100%;
-    height: 0px; //for some reason min-height doesn't work for body without this.
-}
-
-//footer trick
-body{ 
-    display:flex; 
-    flex-direction:column; 
-  }
-  
-  #footer{
-    margin-top:auto; 
-  }
-//end footer trick
-
 *{
     box-sizing: border-box;
     padding: 0;
     margin: 0;
 }
 
-#header, #footer{
-    width: 100%;
-    display: inline-block;
+html, body{
+    min-height: 100%;
+    height: 0px; //for some reason min-height doesn't work for body without this.
 }
 
 img{
@@ -30,22 +14,20 @@ img{
     width: auto;
 }
 
-#logo{
-    height: 80px;
-}
-
-.floatLeft{
-    float:left;
-}
-
-.floatRight{
-    float:right;
-}
-
-#mainAuthentication{
+section.main{
     width: 50%;
     margin: auto;
 }
-#formResetPassword{
-    margin-top:20px;
+
+.mainHeader{
+    font-size: xx-large;
 }
+
+@import "./fragments/appbar.scss";
+@import "./fragments/footer.scss";
+@import "./fragments/header.scss";
+
+@import "./pages/login.scss";
+@import "./pages/register.scss";
+@import "./pages/reset_password.scss";
+@import "./pages/users.scss";

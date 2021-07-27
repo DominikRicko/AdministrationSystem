@@ -1,9 +1,9 @@
 package com.samuraiDigital.adminsystem.data.model;
 
-import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
@@ -18,6 +18,8 @@ import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.PrimaryKeyJoinColumn;
 
+import org.hibernate.annotations.Cascade;
+import org.hibernate.annotations.CascadeType;
 import org.springframework.security.core.GrantedAuthority;
 
 @Entity
@@ -34,8 +36,8 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 	private String email;
 	private String passwordHash;
 	private Boolean enabled;
-	private Date accountExpirationDate;
-	private Date credentialsExpirationDate;
+	private LocalDate accountExpirationDate;
+	private LocalDate credentialsExpirationDate;
 
 	@OneToOne(mappedBy = "userSecurity")
 	@PrimaryKeyJoinColumn
@@ -45,6 +47,7 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 	@JoinTable(name = "group_members", 
 		joinColumns = @JoinColumn(name = "id_user"), 
 		inverseJoinColumns = @JoinColumn(name = "id_group"))
+	@Cascade(CascadeType.ALL)
 	private Set<SecurityGroup> groups = new HashSet<>();
 
 	public UserSecurityDetails() {
@@ -71,7 +74,7 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return this.accountExpirationDate.after(Date.valueOf(LocalDate.now()));
+		return this.accountExpirationDate.isAfter(LocalDate.now());
 	}
 
 	@Override
@@ -81,7 +84,7 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		return this.credentialsExpirationDate.after(Date.valueOf(LocalDate.now()));
+		return this.credentialsExpirationDate.isAfter(LocalDate.now());
 	}
 
 	@Override
@@ -105,24 +108,24 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 		this.passwordHash = passwordHash;
 	}
 
-	public Date getAccountExpirationDate() {
+	public LocalDate getAccountExpirationDate() {
 		return accountExpirationDate;
 	}
 
-	public void setAccountExpirationDate(Date accountExpirationDate) {
+	public void setAccountExpirationDate(LocalDate accountExpirationDate) {
 		this.accountExpirationDate = accountExpirationDate;
 	}
 
-	public Date getCredentialsExpirationDate() {
+	public LocalDate getCredentialsExpirationDate() {
 		return credentialsExpirationDate;
 	}
 
-	public void setCredentialsExpirationDate(Date credentialsExpirationDate) {
+	public void setCredentialsExpirationDate(LocalDate credentialsExpirationDate) {
 		this.credentialsExpirationDate = credentialsExpirationDate;
 	}
 
-	public UserInfo getUser() {
-		return user;
+	public Optional<UserInfo> getUser() {
+		return Optional.ofNullable(user);
 	}
 
 	public void setUser(UserInfo user) {
@@ -147,6 +150,10 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	
+	public void addGroup(SecurityGroup group) {
+		this.groups.add(group);
 	}
 
 }
