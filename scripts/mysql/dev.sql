@@ -4,7 +4,7 @@ SET foreign_key_checks = 0;
 SET sql_mode = 'NO_AUTO_VALUE_ON_ZERO';
 
 CREATE TABLE IF NOT EXISTS `authority` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(64) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
   `description` text CHARACTER SET utf16 COLLATE utf16_bin,
   `time_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `authority` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
 
 CREATE TABLE `security_group` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(64) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
   `time_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -22,18 +22,18 @@ CREATE TABLE `security_group` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
 
 CREATE TABLE IF NOT EXISTS `group_authority` (
-  `id_group` bigint NOT NULL,
-  `id_authority` bigint NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_group` int NOT NULL,
+  `id_authority` int NOT NULL,
   `time_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_authority`,`id_group`),
-  KEY `id_group` (`id_group`),
+  PRIMARY KEY (`id`),
   CONSTRAINT `group_authority_ibfk_1` FOREIGN KEY (`id_authority`) REFERENCES `authority` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `group_authority_ibfk_2` FOREIGN KEY (`id_group`) REFERENCES `security_group` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
 
 CREATE TABLE IF NOT EXISTS `user_security_details` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `username` varchar(32) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
   `email` varchar(64) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
   `password_hash` varchar(64) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS `user_security_details` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
 
 CREATE TABLE IF NOT EXISTS `user_info` (
-  `id` bigint NOT NULL AUTO_INCREMENT,
+  `id` int NOT NULL AUTO_INCREMENT,
   `name` varchar(64) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
   `surname` varchar(64) CHARACTER SET utf16 COLLATE utf16_bin NOT NULL,
   `birthdate` date DEFAULT NULL,
@@ -59,14 +59,13 @@ CREATE TABLE IF NOT EXISTS `user_info` (
   CONSTRAINT `user_info_ibfk_2` FOREIGN KEY (`id`) REFERENCES `user_security_details` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
 
-
 CREATE TABLE IF NOT EXISTS `group_members` (
-  `id_group` bigint NOT NULL,
-  `id_user` bigint NOT NULL,
+  `id` int NOT NULL AUTO_INCREMENT,
+  `id_group` int NOT NULL,
+  `id_user` int NOT NULL,
   `time_created` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `last_modified` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-  PRIMARY KEY (`id_user`,`id_group`),
-  KEY `id_group` (`id_group`),
+  PRIMARY KEY (`id`),
   CONSTRAINT `group_members_ibfk_1` FOREIGN KEY (`id_group`) REFERENCES `security_group` (`id`),
   CONSTRAINT `group_members_ibfk_2` FOREIGN KEY (`id_user`) REFERENCES `user_security_details` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf16 COLLATE=utf16_bin;
