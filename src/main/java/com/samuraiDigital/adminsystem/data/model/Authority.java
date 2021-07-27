@@ -102,15 +102,8 @@ public class Authority implements GrantedAuthority {
 
 	@Override
 	public String toString() {
-		
-		StringBuffer buffer = new StringBuffer("Authority: ");
-		
-		if(this.id != null) {
-			buffer.append("Id: ").append(this.id).append(" ");
-		}
-		buffer.append("Name: ").append(this.name);
-		
-		return buffer.toString();
+		return "Authority [id=" + ((id != null) ? (id) : "Unassigned") + ", name=" + name + ", description="
+				+ description + ", groups=" + groups + "]";
 	}
 
 }

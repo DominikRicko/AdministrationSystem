@@ -20,7 +20,7 @@ public class UserInfo {
 	private String surname;
 	private LocalDate birthdate;
 	private String address;
-	
+
 	@OneToOne(fetch = FetchType.EAGER)
 	@PrimaryKeyJoinColumn
 	@Cascade(CascadeType.ALL)
@@ -88,15 +88,8 @@ public class UserInfo {
 
 	@Override
 	public String toString() {
-		StringBuffer buffer = new StringBuffer("User information: ");
-		
-		if(this.id != null) {
-			buffer.append("Id: ").append(this.id).append(" ");
-		}
-		buffer.append("Name: ").append(this.name).append(" ");
-		buffer.append("Surname: ").append(this.surname).append(" ");
-		
-		return buffer.toString();
+		return "UserInfo [id=" + ((id != null) ? (id) : "Unassigned") + ", name=" + name + ", surname=" + surname
+				+ ", birthdate=" + birthdate + ", address=" + address + ", userSecurity=" + userSecurity + "]";
 	}
-	
+
 }

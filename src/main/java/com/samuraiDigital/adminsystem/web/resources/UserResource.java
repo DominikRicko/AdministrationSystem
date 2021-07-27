@@ -2,8 +2,8 @@ package com.samuraiDigital.adminsystem.web.resources;
 
 import java.util.Collection;
 
-public class UserResource{
-	
+public class UserResource {
+
 	final private Integer id;
 	final private String name;
 	final private String surname;
@@ -14,9 +14,10 @@ public class UserResource{
 	final private Boolean enabled;
 	final private String account_expiration_date;
 	final private String credentials_expiration_date;
-	
-	public UserResource(Integer id, String name, String surname, String birthdate, Collection<String> groups, String email, String username, Boolean enabled,
-			String account_expiration_date, String credentials_expiration_date) {
+
+	public UserResource(Integer id, String name, String surname, String birthdate, Collection<String> groups,
+			String email, String username, Boolean enabled, String account_expiration_date,
+			String credentials_expiration_date) {
 		super();
 		this.id = id;
 		this.name = name;
@@ -47,11 +48,11 @@ public class UserResource{
 	}
 
 	public String getGroups() {
-		
+
 		StringBuilder builder = new StringBuilder();
-		
+
 		groups.forEach(it -> builder.append(it).append("\n"));
-		
+
 		return builder.toString();
 	}
 
@@ -74,5 +75,13 @@ public class UserResource{
 	public String getUsername() {
 		return username;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "UserResource [id=" + ((id != null) ? (id) : "Unassigned") + ", name=" + name + ", surname=" + surname
+				+ ", birthdate=" + birthdate + ", groups=" + groups + ", email=" + email + ", username=" + username
+				+ ", enabled=" + enabled + ", account_expiration_date=" + account_expiration_date
+				+ ", credentials_expiration_date=" + credentials_expiration_date + "]";
+	}
+
 }
