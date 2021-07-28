@@ -16,9 +16,6 @@ import javax.persistence.ManyToMany;
 
 import org.springframework.security.core.GrantedAuthority;
 
-import com.samuraiDigital.adminsystem.exceptions.GroupAlreadyHasAuthorityException;
-import com.samuraiDigital.adminsystem.exceptions.GroupLacksAuthorityException;
-
 @Entity
 public class Authority implements GrantedAuthority {
 
@@ -84,14 +81,10 @@ public class Authority implements GrantedAuthority {
 	}
 
 	public void addGroup(SecurityGroup group) {
-		if (this.groups.contains(group))
-			throw new GroupAlreadyHasAuthorityException(group, this);
 		this.groups.add(group);
 	}
 
 	public void removeGroup(SecurityGroup group) {
-		if (!this.groups.contains(group))
-			throw new GroupLacksAuthorityException(group, this);
 		this.groups.remove(group);
 	}
 
