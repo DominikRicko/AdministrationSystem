@@ -65,7 +65,7 @@ public class ApiUserController {
 		return new ResponseEntity<>(newUserResource, HttpStatus.CREATED);
 
 	}
-	@RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
+	@RequestMapping(method = RequestMethod.DELETE, path = "{userId}")
 	@Operation(summary = "Deletes an existing user with supplied id.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "204", description = "User successfully deleted.", content = @Content(mediaType = "none")),
@@ -77,16 +77,16 @@ public class ApiUserController {
 
 	}
 
-	@RequestMapping(method = RequestMethod.PUT, path = "{id}")
+	@RequestMapping(method = RequestMethod.PUT, path = "{userId}")
 	@Operation(summary = "Updates an existing user.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "201", description = "User succuessfully updated.", content = @Content(mediaType = "application/json")),
 			@ApiResponse(responseCode = "418", description = "User could not be updated, check username and email.", content = @Content(mediaType = "none")),
 			@ApiResponse(responseCode = "422", description = "Failed creating a user.") })
 
-	public ResponseEntity<?> updateUser(@PathVariable @Parameter Integer id, ApiUserResource user) {
+	public ResponseEntity<?> updateUser(@PathVariable @Parameter Integer userId, ApiUserResource user) {
 
-		ApiUserResource newUserResource = resourceService.updateUser(id, user);
+		ApiUserResource newUserResource = resourceService.updateUser(userId, user);
 
 		return new ResponseEntity<>(newUserResource, HttpStatus.CREATED);
 

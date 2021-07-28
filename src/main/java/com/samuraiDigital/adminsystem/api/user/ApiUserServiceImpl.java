@@ -70,6 +70,7 @@ public class ApiUserServiceImpl implements ApiUserService {
 
 		newUserResource.setId(user.getId());
 		newUserResource.setUsername(user.getUsername());
+		newUserResource.setEmail(user.getEmail());
 		newUserResource.setAccount_expiration_date(user.getAccountExpirationDate().toString());
 		newUserResource.setCredentials_expiration_date(user.getCredentialsExpirationDate().toString());
 		newUserResource.setEnabled(user.isEnabled());
@@ -165,7 +166,7 @@ public class ApiUserServiceImpl implements ApiUserService {
 	@Override
 	public void deleteUserById(Integer id) {
 
-		userDetailsRepository.deleteById(id);
+		userInfoRepository.deleteById(id);
 
 	}
 
