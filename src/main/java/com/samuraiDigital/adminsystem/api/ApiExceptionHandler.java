@@ -12,13 +12,12 @@ public class ApiExceptionHandler {
 
 	@ExceptionHandler
 	@ResponseBody
-	public ResponseEntity<?> handleException(HttpClientErrorException e){
-		if(e.getStatusCode() == HttpStatus.OK) {
+	public ResponseEntity<?> handleException(HttpClientErrorException e) {
+		if (e.getStatusCode() == HttpStatus.OK) {
 			return new ResponseEntity<>(e.getStatusText(), e.getStatusCode());
-		}
-		else {
+		} else {
 			return new ResponseEntity<>(e.getStatusText(), HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	
+
 }

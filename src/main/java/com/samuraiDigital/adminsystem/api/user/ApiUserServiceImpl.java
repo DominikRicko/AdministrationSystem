@@ -106,10 +106,14 @@ public class ApiUserServiceImpl implements ApiUserService {
 	@Override
 	public ApiUserResource getUser(Integer id) {
 
+		if (id == null)
+			throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Did not send an id.");
+
 		Optional<UserSecurityDetails> user = userDetailsRepository.findById(id);
 
 		if (user.isEmpty())
-			throw new HttpClientErrorException(HttpStatus.NOT_FOUND, String.format("User with id [%s] is not found.", id));
+			throw new HttpClientErrorException(HttpStatus.NOT_FOUND,
+					String.format("User with id [%s] is not found.", id));
 
 		return convertToUserResource(user.get());
 
@@ -132,10 +136,9 @@ public class ApiUserServiceImpl implements ApiUserService {
 		newUserSecurity.setEmail(user.getEmail());
 		newUserSecurity.setUsername(user.getUsername());
 		newUserSecurity.setEnabled(user.getEnabled());
+		newUserSecurity.setAccountExpirationDate(convertFromJSDateTimeFormat(user.getAccount_expiration_date()));
 		newUserSecurity
-				.setAccountExpirationDate(convertFromJSDateTimeFormat(user.getAccount_expiration_date()));
-		newUserSecurity.setCredentialsExpirationDate(
-				convertFromJSDateTimeFormat(user.getCredentials_expiration_date()));
+				.setCredentialsExpirationDate(convertFromJSDateTimeFormat(user.getCredentials_expiration_date()));
 
 		newUserSecurity = userDetailsRepository.save(newUserSecurity);
 		newUserInfo.setId(newUserSecurity.getId());
@@ -163,7 +166,7 @@ public class ApiUserServiceImpl implements ApiUserService {
 	public void deleteUserById(Integer id) {
 
 		userDetailsRepository.deleteById(id);
-		
+
 	}
 
 	@Override

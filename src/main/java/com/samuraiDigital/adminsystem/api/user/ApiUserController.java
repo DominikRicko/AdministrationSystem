@@ -40,7 +40,10 @@ public class ApiUserController {
 	@Operation(summary = "Gets the single user from id value.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Found the user.", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "404", description = "User not found.", content = @Content(mediaType = "none")) })
+			@ApiResponse(responseCode = "404", description = "User not found.", content = @Content(mediaType = "none")),
+			@ApiResponse(responseCode = "400", description = "Did not receive an id", content = @Content(mediaType = "none")),
+
+	})
 	public ResponseEntity<?> getUser(@PathVariable @Parameter Integer id) {
 
 		ApiUserResource user = resourceService.getUser(id);
@@ -53,7 +56,8 @@ public class ApiUserController {
 	@Operation(summary = "Creates a new user from input data.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "201", description = "User created.", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "418", description = "Error creating a user, either username or email already exists in database.", content = @Content(mediaType = "none")) })
+			@ApiResponse(responseCode = "418", description = "Error creating a user, either username or email already exists in database.", content = @Content(mediaType = "none")),
+			@ApiResponse(responseCode = "422", description = "Failed creating a user.") })
 	public ResponseEntity<?> createUser(ApiUserResource user) {
 
 		ApiUserResource newUserResource = resourceService.saveUser(user);
@@ -61,7 +65,6 @@ public class ApiUserController {
 		return new ResponseEntity<>(newUserResource, HttpStatus.CREATED);
 
 	}
-
 	@RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
 	@Operation(summary = "Deletes an existing user with supplied id.")
 	@ApiResponses(value = {
@@ -78,7 +81,9 @@ public class ApiUserController {
 	@Operation(summary = "Updates an existing user.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "201", description = "User succuessfully updated.", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "418", description = "User could not be updated, check username and email.", content = @Content(mediaType = "none")) })
+			@ApiResponse(responseCode = "418", description = "User could not be updated, check username and email.", content = @Content(mediaType = "none")),
+			@ApiResponse(responseCode = "422", description = "Failed creating a user.") })
+
 	public ResponseEntity<?> updateUser(@PathVariable @Parameter Integer id, ApiUserResource user) {
 
 		ApiUserResource newUserResource = resourceService.updateUser(id, user);
