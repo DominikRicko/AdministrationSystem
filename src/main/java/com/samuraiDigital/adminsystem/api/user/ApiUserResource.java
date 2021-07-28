@@ -2,17 +2,40 @@ package com.samuraiDigital.adminsystem.api.user;
 
 import java.util.Collection;
 
+import io.swagger.v3.oas.annotations.media.ArraySchema;
+import io.swagger.v3.oas.annotations.media.Schema;
+
+@Schema(name = "User", description = "User resource")
 public class ApiUserResource {
 
+	@Schema(name = "Id", description = "Unique identifier for user", required = true)
 	private Integer id;
+	
+	@Schema(name = "Name", required = true)
 	private String name;
+	
+	@Schema(name = "Surname", required = true)
 	private String surname;
+	
+	@Schema(name = "Birthdate", required = true)
 	private String birthdate;
+	
+	@ArraySchema(minItems = 0, arraySchema = @Schema(name = "groups", description = "User belongs to these groups."), schema =  @Schema(name = "group"), uniqueItems = true)
 	private Collection<String> groups;
+	
+	@Schema(name = "Email", required = true)
 	private String email;
+	
+	@Schema(name = "Username", required = true)
 	private String username;
+	
+	@Schema(name = "Enabled", description = "Is user's account enabled.", required = true)
 	private Boolean enabled;
+	
+	@Schema(name = "Account expiration date", description = "When does the user's account expire.", required = false)
 	private String account_expiration_date;
+	
+	@Schema(name = "Credentials expiration date", description = "When does the user's credentials expire.",  required = false)
 	private String credentials_expiration_date;
 	
 	public ApiUserResource() {
