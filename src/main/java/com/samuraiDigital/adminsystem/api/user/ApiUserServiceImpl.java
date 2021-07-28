@@ -133,6 +133,8 @@ public class ApiUserServiceImpl implements ApiUserService {
 			}
 		}
 
+		Set<SecurityGroup> groups = parseAndSaveGroups(user.getGroups());
+		
 		newUserSecurity.setPasswordHash("placeholder");
 		newUserSecurity.setEmail(user.getEmail());
 		newUserSecurity.setUsername(user.getUsername());
@@ -140,7 +142,8 @@ public class ApiUserServiceImpl implements ApiUserService {
 		newUserSecurity.setAccountExpirationDate(convertFromJSDateTimeFormat(user.getAccount_expiration_date()));
 		newUserSecurity
 				.setCredentialsExpirationDate(convertFromJSDateTimeFormat(user.getCredentials_expiration_date()));
-
+		newUserSecurity.setGroups(groups);
+		
 		newUserSecurity = userDetailsRepository.save(newUserSecurity);
 		newUserInfo.setId(newUserSecurity.getId());
 		newUserInfo.setUserSecurity(newUserSecurity);
