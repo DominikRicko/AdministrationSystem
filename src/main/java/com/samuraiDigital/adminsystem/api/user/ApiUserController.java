@@ -1,7 +1,5 @@
 package com.samuraiDigital.adminsystem.api.user;
 
-import java.util.Optional;
-
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,11 +19,11 @@ import io.swagger.v3.oas.annotations.responses.ApiResponses;
 @RestController
 @OpenAPIDefinition(info = @Info(title = "User API", description = "API for administration of users", contact = @Contact(name = "Dominik Ričko", email = "dominik.ricko@nth.ch")))
 @RequestMapping(path = { "/e/api/v1/users", "/i/api/v1/users" })
-public class UserApiController {
+public class ApiUserController {
 
-	private UserResourceService resourceService;
+	private ApiUserService resourceService;
 
-	public UserApiController(UserResourceService resourceService) {
+	public ApiUserController(ApiUserService resourceService) {
 		super();
 		this.resourceService = resourceService;
 	}
@@ -45,13 +43,9 @@ public class UserApiController {
 			@ApiResponse(responseCode = "404", description = "User not found.", content = @Content(mediaType = "none")) })
 	public ResponseEntity<?> getUser(@PathVariable @Parameter Integer id) {
 
-		Optional<UserResource> user = resourceService.getUser(id);
+		ApiUserResource user = resourceService.getUser(id);
 
-		if (user.isPresent()) {
-			return new ResponseEntity<>(user.get(), HttpStatus.OK);
-		} else {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-		}
+		return new ResponseEntity<>(user, HttpStatus.OK);
 
 	}
 
@@ -59,16 +53,12 @@ public class UserApiController {
 	@Operation(summary = "Creates a new user from input data.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "201", description = "User created.", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "418", description = "Error creating a user, either username or email already exists in database.", content = @Content(mediaType = "none"))
-	})
-	public ResponseEntity<?> createUser(UserResource user) {
+			@ApiResponse(responseCode = "418", description = "Error creating a user, either username or email already exists in database.", content = @Content(mediaType = "none")) })
+	public ResponseEntity<?> createUser(ApiUserResource user) {
 
-		Optional<UserResource> newUserResource = resourceService.saveUser(user); 
-		
-		if (newUserResource.isPresent())
-			return new ResponseEntity<>(newUserResource.get(), HttpStatus.CREATED);
-		else
-			return new ResponseEntity<>(null, HttpStatus.I_AM_A_TEAPOT);
+		ApiUserResource newUserResource = resourceService.saveUser(user);
+
+		return new ResponseEntity<>(newUserResource, HttpStatus.CREATED);
 
 	}
 
@@ -76,34 +66,24 @@ public class UserApiController {
 	@Operation(summary = "Deletes an existing user with supplied id.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "204", description = "User successfully deleted.", content = @Content(mediaType = "none")),
-			@ApiResponse(responseCode = "404", description = "User not found.", content = @Content(mediaType = "none"))
-	})
+			@ApiResponse(responseCode = "404", description = "User not found.", content = @Content(mediaType = "none")) })
 	public ResponseEntity<?> removeUser(@PathVariable @Parameter Integer userId) {
 
-		if (resourceService.deleteUserById(userId)) {
-			return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);	
-		}
-		else {
-			return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
-		}
+		resourceService.deleteUserById(userId);
+		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
 
-		
 	}
 
 	@RequestMapping(method = RequestMethod.PUT, path = "{id}")
 	@Operation(summary = "Updates an existing user.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "201", description = "User succuessfully updated.", content = @Content(mediaType = "application/json")),
-			@ApiResponse(responseCode = "418", description = "User could not be updated, check username and email.", content = @Content(mediaType = "none"))
-	})
-	public ResponseEntity<?> updateUser(@PathVariable @Parameter Integer id, UserResource user) {
+			@ApiResponse(responseCode = "418", description = "User could not be updated, check username and email.", content = @Content(mediaType = "none")) })
+	public ResponseEntity<?> updateUser(@PathVariable @Parameter Integer id, ApiUserResource user) {
 
-		Optional<UserResource> newUserResource = resourceService.updateUser(id, user); 
-		
-		if (newUserResource.isPresent())
-			return new ResponseEntity<>(newUserResource.get(), HttpStatus.CREATED);
-		else
-			return new ResponseEntity<>(null, HttpStatus.I_AM_A_TEAPOT);
+		ApiUserResource newUserResource = resourceService.updateUser(id, user);
+
+		return new ResponseEntity<>(newUserResource, HttpStatus.CREATED);
 
 	}
 
