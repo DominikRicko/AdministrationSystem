@@ -34,7 +34,7 @@ public class SecurityConfiguration {
 
 		@Override
 		protected void configure(HttpSecurity http) throws Exception {
-			http.authorizeRequests().antMatchers("/login").permitAll();
+			http.authorizeRequests().antMatchers("/login").permitAll().and().authorizeRequests().anyRequest().denyAll();
 		}
 		
 	}
