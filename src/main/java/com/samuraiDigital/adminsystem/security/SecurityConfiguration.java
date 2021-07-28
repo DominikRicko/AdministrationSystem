@@ -14,14 +14,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.csrf().disable()
-		.authorizeRequests().antMatchers(
+		http.csrf().disable();
+		http.httpBasic();
+		http.authorizeRequests().antMatchers(
 				"/login", "/perform_login", 
 				"/register", "/perform_register", 
-				"/reset_password", 
-				"/js/*", "/images/*", "/css/*").permitAll()
-		.anyRequest().authenticated().and()
-		.formLogin().loginPage("/login")
+				"/reset_password").permitAll();
+		
+		http.authorizeRequests().antMatchers("/js/**", "/images/**", "/css/**").permitAll();
+		http.authorizeRequests().antMatchers("/e/**").authenticated();
+		http.authorizeRequests().antMatchers("/i/**").permitAll();
+		
+		http.authorizeRequests().anyRequest().authenticated();
+		
+		http.formLogin().loginPage("/login")
 		.loginProcessingUrl("/perform_login").and()
 		.logout().logoutUrl("/perform_logout").deleteCookies("JSESSIONID");
 
