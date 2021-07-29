@@ -1,12 +1,10 @@
 package com.samuraiDigital.adminsystem.api.user;
 
-import java.text.ParsePosition;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
-import java.util.Locale;
 import java.util.Optional;
 import java.util.Set;
 
@@ -27,6 +25,7 @@ public class ApiUserServiceImpl implements ApiUserService {
 	private UserSecurityDetailsRepository userDetailsRepository;
 	private UserInfoRepository userInfoRepository;
 	private SecurityGroupRepository groupRepository;
+	private DateTimeFormatter dateFormat = DateTimeFormatter.ISO_DATE_TIME;
 
 	public ApiUserServiceImpl(UserSecurityDetailsRepository userDetailsRepository,
 			UserInfoRepository userInfoRepository, SecurityGroupRepository groupRepository) {
@@ -34,13 +33,6 @@ public class ApiUserServiceImpl implements ApiUserService {
 		this.userDetailsRepository = userDetailsRepository;
 		this.userInfoRepository = userInfoRepository;
 		this.groupRepository = groupRepository;
-	}
-
-	private LocalDate convertFromJSDateTimeFormat(String JSDateTime) {
-
-		DateTimeFormatter dateFormat = DateTimeFormatter.ofPattern("EEE MMM dd yyyy HH:mm:ss 'GMT'Z", Locale.US);
-		return LocalDate.from(dateFormat.parse(JSDateTime, new ParsePosition(0)));
-
 	}
 
 	private Set<SecurityGroup> parseAndSaveGroups(Collection<String> groups) {
@@ -122,7 +114,7 @@ public class ApiUserServiceImpl implements ApiUserService {
 
 	@Override
 	public ApiUserResource saveUser(ApiUserResource user) {
-
+		DateTimeFormatter dateFormat = DateTimeFormatter.ISO_DATE_TIME;
 		UserSecurityDetails newUserSecurity = new UserSecurityDetails();
 		UserInfo newUserInfo = new UserInfo();
 
@@ -134,22 +126,22 @@ public class ApiUserServiceImpl implements ApiUserService {
 		}
 
 		Set<SecurityGroup> groups = parseAndSaveGroups(user.getGroups());
-		
+
 		newUserSecurity.setPasswordHash("placeholder");
 		newUserSecurity.setEmail(user.getEmail());
 		newUserSecurity.setUsername(user.getUsername());
 		newUserSecurity.setEnabled(user.getEnabled());
-		newUserSecurity.setAccountExpirationDate(convertFromJSDateTimeFormat(user.getAccount_expiration_date()));
+		newUserSecurity.setAccountExpirationDate(LocalDate.parse(user.getAccount_expiration_date(), dateFormat));
 		newUserSecurity
-				.setCredentialsExpirationDate(convertFromJSDateTimeFormat(user.getCredentials_expiration_date()));
+				.setCredentialsExpirationDate(LocalDate.from(dateFormat.parse(user.getCredentials_expiration_date())));
 		newUserSecurity.setGroups(groups);
-		
+
 		newUserSecurity = userDetailsRepository.save(newUserSecurity);
 		newUserInfo.setId(newUserSecurity.getId());
 		newUserInfo.setUserSecurity(newUserSecurity);
 		newUserSecurity.setUser(newUserInfo);
 
-		newUserInfo.setBirthdate(convertFromJSDateTimeFormat(user.getBirthdate()));
+		newUserInfo.setBirthdate(LocalDate.from(dateFormat.parse(user.getBirthdate())));
 		newUserInfo.setName(user.getName());
 		newUserInfo.setSurname(user.getSurname());
 
@@ -183,8 +175,9 @@ public class ApiUserServiceImpl implements ApiUserService {
 		}
 
 		UserSecurityDetails userSecurity = userFromRepo.get();
-		userSecurity.setAccountExpirationDate(convertFromJSDateTimeFormat(user.getAccount_expiration_date()));
-		userSecurity.setCredentialsExpirationDate(convertFromJSDateTimeFormat(user.getCredentials_expiration_date()));
+		userSecurity.setAccountExpirationDate(LocalDate.from(dateFormat.parse(user.getAccount_expiration_date())));
+		userSecurity
+				.setCredentialsExpirationDate(LocalDate.from(dateFormat.parse(user.getCredentials_expiration_date())));
 		userSecurity.setEmail(user.getEmail());
 		userSecurity.setUsername(user.getUsername());
 		userSecurity.setEnabled(user.getEnabled());
@@ -204,7 +197,7 @@ public class ApiUserServiceImpl implements ApiUserService {
 
 		userInfo.setName(user.getName());
 		userInfo.setSurname(user.getSurname());
-		userInfo.setBirthdate(convertFromJSDateTimeFormat(user.getBirthdate()));
+		userInfo.setBirthdate(LocalDate.from(dateFormat.parse(user.getBirthdate())));
 
 		try {
 			userInfoRepository.save(userInfo);

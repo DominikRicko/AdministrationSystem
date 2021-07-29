@@ -1,3 +1,21 @@
+
+function parseDate(input : any){
+    for(const key in input){
+
+        if(input[key] instanceof Date){
+
+            const day = (input[key] as Date).getDate();
+            (input[key] as Date).setUTCHours(0,0,0,0);
+            (input[key] as Date).setDate(day);
+            input[key] = (input[key] as Date).toISOString();
+        }
+    }
+
+    console.log(input);
+
+    return JSON.stringify(input);
+}
+
 function checkEmail(val : string) {
 
     var re = /(?:[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*|"(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21\x23-\x5b\x5d-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])*")@(?:(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?|\[(?:(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9]))\.){3}(?:(2(5[0-5]|[0-4][0-9])|1[0-9][0-9]|[1-9]?[0-9])|[a-z0-9-]*[a-z0-9]:(?:[\x01-\x08\x0b\x0c\x0e-\x1f\x21-\x5a\x53-\x7f]|\\[\x01-\x09\x0b\x0c\x0e-\x7f])+)\])/;
@@ -88,6 +106,9 @@ $("#grid").kendoGrid({
             create: {
                 url: "/i/api/v1/users/",
                 type: "POST",
+                data: (input : any) => parseDate(input),
+                dataType: "json",
+                
             },
             destroy: {
                 url: (data : any) => "/i/api/v1/users/" + data.id,
@@ -96,6 +117,8 @@ $("#grid").kendoGrid({
             },
             update: {
                 url: (data : any) => "/i/api/v1/users/" + data.id,
+                data: (input : any) => parseDate(input),
+                dataType: "json",
                 type: "PUT",
             },
             batch: true,
