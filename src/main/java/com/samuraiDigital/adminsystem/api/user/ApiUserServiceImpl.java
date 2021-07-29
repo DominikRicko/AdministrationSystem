@@ -135,19 +135,21 @@ public class ApiUserServiceImpl implements ApiUserService {
 		newUserSecurity
 				.setCredentialsExpirationDate(LocalDate.from(dateFormat.parse(user.getCredentials_expiration_date())));
 		newUserSecurity.setGroups(groups);
-
-		newUserSecurity = userDetailsRepository.save(newUserSecurity);
-		newUserInfo.setId(newUserSecurity.getId());
-		newUserInfo.setUserSecurity(newUserSecurity);
-		newUserSecurity.setUser(newUserInfo);
-
-		newUserInfo.setBirthdate(LocalDate.from(dateFormat.parse(user.getBirthdate())));
-		newUserInfo.setName(user.getName());
-		newUserInfo.setSurname(user.getSurname());
-
+		
 		try {
+			
+			newUserSecurity = userDetailsRepository.save(newUserSecurity);
+			newUserInfo.setId(newUserSecurity.getId());
+			newUserInfo.setUserSecurity(newUserSecurity);
+			newUserSecurity.setUser(newUserInfo);
+	
+			newUserInfo.setBirthdate(LocalDate.from(dateFormat.parse(user.getBirthdate())));
+			newUserInfo.setName(user.getName());
+			newUserInfo.setSurname(user.getSurname());
+	
 			userInfoRepository.save(newUserInfo);
 			userDetailsRepository.save(newUserSecurity);
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new HttpClientErrorException(HttpStatus.UNPROCESSABLE_ENTITY,
