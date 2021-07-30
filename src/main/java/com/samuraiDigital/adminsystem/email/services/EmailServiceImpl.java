@@ -10,15 +10,16 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
 @Service
-public class EmailServiceImpl implements EmailService{
+public class EmailServiceImpl implements EmailService {
 
 	private static Logger logger = LoggerFactory.getLogger(EmailServiceImpl.class);
-	
+
 	private RabbitTemplate rabbitTemplate;
 	private String exchange;
 	private String routeKey;
-	
-	public EmailServiceImpl(RabbitTemplate rabbitTemplate, @Value("${mq.exchange.name}") String exchange, @Value("${mq.routekey}") String routeKey) {
+
+	public EmailServiceImpl(RabbitTemplate rabbitTemplate, @Value("${mq.exchange.name}") String exchange,
+			@Value("${mq.routekey}") String routeKey) {
 		super();
 		this.rabbitTemplate = rabbitTemplate;
 		this.exchange = exchange;
@@ -27,13 +28,13 @@ public class EmailServiceImpl implements EmailService{
 
 	@Override
 	public void sendEmail(String message) throws Exception {
-	
+
 		try {
-			rabbitTemplate.convertAndSend(exchange,routeKey,message);
-		}catch(Exception e) {
-			logger.error("EmailServiceImpl.sendEmail",ExceptionUtils.getMessage(e));
+			rabbitTemplate.convertAndSend(exchange, routeKey, message);
+		} catch (Exception e) {
+			logger.error("EmailServiceImpl.sendEmail", ExceptionUtils.getMessage(e));
 		}
-		
+
 	}
-	
+
 }

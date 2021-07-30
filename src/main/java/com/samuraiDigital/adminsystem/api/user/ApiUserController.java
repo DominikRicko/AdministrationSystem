@@ -65,6 +65,7 @@ public class ApiUserController {
 		return new ResponseEntity<>(newUserResource, HttpStatus.CREATED);
 
 	}
+
 	@RequestMapping(method = RequestMethod.DELETE, path = "{userId}")
 	@Operation(summary = "Deletes an existing user with supplied id.")
 	@ApiResponses(value = {

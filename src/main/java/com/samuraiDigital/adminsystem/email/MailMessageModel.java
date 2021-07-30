@@ -1,11 +1,11 @@
 package com.samuraiDigital.adminsystem.email;
 
 public class MailMessageModel {
-	
-    private String from;
-    private String to;
-    private String subject;
-    private String text;
+
+	private String from;
+	private String to;
+	private String subject;
+	private String text;
 
 	public String getFrom() {
 		return from;
@@ -38,5 +38,5 @@ public class MailMessageModel {
 	public void setText(String text) {
 		this.text = text;
 	}
-    
+
 }

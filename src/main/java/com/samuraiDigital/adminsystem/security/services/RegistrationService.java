@@ -5,5 +5,5 @@ import com.samuraiDigital.adminsystem.security.model.UserCredentials;
 public interface RegistrationService {
 
 	public void register(UserCredentials userCredentials);
-	
+
 }

@@ -9,7 +9,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 @SpringBootApplication()
 @EnableJpaRepositories("com.samuraiDigital.adminsystem.data.repositories")
 @EntityScan("com.samuraiDigital.adminsystem.data.model")
-@ComponentScan({"com.samuraiDigital.adminsystem"})
+@ComponentScan({ "com.samuraiDigital.adminsystem" })
 public class AdminSystemApplication {
 
 	public static void main(String[] args) {

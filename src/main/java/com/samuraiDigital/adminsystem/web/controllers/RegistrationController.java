@@ -11,35 +11,33 @@ import com.samuraiDigital.adminsystem.security.services.RegistrationService;
 
 @Controller
 public class RegistrationController {
-	
+
 	private RegistrationCheckerService registrationChecker;
 	private RegistrationService registrationService;
-	
-	public RegistrationController(RegistrationCheckerService registrationChecker, RegistrationService registrationService) {
+
+	public RegistrationController(RegistrationCheckerService registrationChecker,
+			RegistrationService registrationService) {
 		super();
 		this.registrationChecker = registrationChecker;
 		this.registrationService = registrationService;
 	}
 
 	@PostMapping("/perform_register")
-	public String register(Model model,
-			@RequestParam("email") String email, 
-			@RequestParam("username") String username, 
+	public String register(Model model, @RequestParam("email") String email, @RequestParam("username") String username,
 			@RequestParam("password") String password) {
-		
+
 		UserCredentials userCredentials = new UserCredentials(username, email, password);
-		if(this.registrationChecker.Check(userCredentials)) {
+		if (this.registrationChecker.Check(userCredentials)) {
 			model.addAttribute("info", "Registration success, check your email for confirmation link.");
 			registrationService.register(userCredentials);
-			//TODO: Send email to user about registration confirmation
+			// TODO: Send email to user about registration confirmation
 
 			return "pages/login";
-		}
-		else {
+		} else {
 			model.addAttribute("error", "Registration failed.");
 			return "pages/register";
 		}
-		
+
 	}
-	
+
 }

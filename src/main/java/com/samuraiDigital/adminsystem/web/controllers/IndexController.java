@@ -6,14 +6,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @Controller
 public class IndexController {
 
-	@RequestMapping({"/","","/index"})
+	@RequestMapping({ "/", "", "/index" })
 	public String index() {
 		return "/pages/index";
 	}
-	
-	@RequestMapping({"/users"})
+
+	@RequestMapping({ "/users" })
 	public String users() {
 		return "/pages/users";
 	}
-	
+
 }

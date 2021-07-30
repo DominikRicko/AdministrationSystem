@@ -6,12 +6,13 @@ import com.samuraiDigital.adminsystem.data.repositories.UserSecurityDetailsRepos
 import com.samuraiDigital.adminsystem.security.model.UserCredentials;
 
 @Service
-public class RegistrationCheckerServiceImpl implements RegistrationCheckerService{
+public class RegistrationCheckerServiceImpl implements RegistrationCheckerService {
 
 	private UserSecurityDetailsRepository userRepository;
 	private EmailValidationService emailValidator;
-	
-	public RegistrationCheckerServiceImpl(UserSecurityDetailsRepository userRepository, EmailValidationService emailValidator) {
+
+	public RegistrationCheckerServiceImpl(UserSecurityDetailsRepository userRepository,
+			EmailValidationService emailValidator) {
 		this.userRepository = userRepository;
 		this.emailValidator = emailValidator;
 	}
@@ -25,11 +26,11 @@ public class RegistrationCheckerServiceImpl implements RegistrationCheckerServic
 		if (userRepository.findByUsername(userCredentials.getUsername()).isPresent()) {
 			return false;
 		}
-		if(userRepository.findByEmail(userCredentials.getEmail()).isPresent()){
+		if (userRepository.findByEmail(userCredentials.getEmail()).isPresent()) {
 			return false;
 		}
-		
+
 		return true;
 	}
-	
+
 }

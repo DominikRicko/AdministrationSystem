@@ -62,10 +62,13 @@ public class RabbitMQConfig {
 	}
 
 	@Bean
-	public SimpleMessageListenerContainer listenerContainer(@Qualifier("mailMessageListenerAdapter") MailMessageListenerAdapter mailMessageListenerAdapter) throws Exception {
+	public SimpleMessageListenerContainer listenerContainer(
+			@Qualifier("mailMessageListenerAdapter") MailMessageListenerAdapter mailMessageListenerAdapter)
+			throws Exception {
 		String queueName = env.getProperty("mq.queue.name").trim();
 
-		SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer(cachingConnectionFactory());
+		SimpleMessageListenerContainer simpleMessageListenerContainer = new SimpleMessageListenerContainer(
+				cachingConnectionFactory());
 		simpleMessageListenerContainer.setQueueNames(queueName);
 		simpleMessageListenerContainer.setMessageListener(mailMessageListenerAdapter);
 		// Set manual ACK
@@ -77,9 +80,15 @@ public class RabbitMQConfig {
 	Queue queue() {
 		String name = env.getProperty("mq.queue.name").trim();
 
-		boolean durable = StringUtils.isNotBlank(env.getProperty("mq.queue.durable")) ? Boolean.valueOf(env.getProperty("mq.queue.durable").trim()) : true;
-		boolean exclusive = StringUtils.isNotBlank(env.getProperty("mq.queue.exclusive")) ? Boolean.valueOf(env.getProperty("mq.queue.exclusive").trim()) : false;
-		boolean autoDelete = StringUtils.isNotBlank(env.getProperty("mq.queue.autoDelete")) ? Boolean.valueOf(env.getProperty("mq.queue.autoDelete").trim()) : false;
+		boolean durable = StringUtils.isNotBlank(env.getProperty("mq.queue.durable"))
+				? Boolean.valueOf(env.getProperty("mq.queue.durable").trim())
+				: true;
+		boolean exclusive = StringUtils.isNotBlank(env.getProperty("mq.queue.exclusive"))
+				? Boolean.valueOf(env.getProperty("mq.queue.exclusive").trim())
+				: false;
+		boolean autoDelete = StringUtils.isNotBlank(env.getProperty("mq.queue.autoDelete"))
+				? Boolean.valueOf(env.getProperty("mq.queue.autoDelete").trim())
+				: false;
 
 		return new Queue(name, durable, exclusive, autoDelete);
 	}
@@ -87,8 +96,12 @@ public class RabbitMQConfig {
 	@Bean
 	TopicExchange exchange() {
 		String name = env.getProperty("mq.exchange.name").trim();
-		boolean durable = StringUtils.isNotBlank(env.getProperty("mq.exchange.durable")) ? Boolean.valueOf(env.getProperty("mq.exchange.durable").trim()) : true;
-		boolean autoDelete = StringUtils.isNotBlank(env.getProperty("mq.exchange.autoDelete")) ? Boolean.valueOf(env.getProperty("mq.exchange.autoDelete").trim()) : false;
+		boolean durable = StringUtils.isNotBlank(env.getProperty("mq.exchange.durable"))
+				? Boolean.valueOf(env.getProperty("mq.exchange.durable").trim())
+				: true;
+		boolean autoDelete = StringUtils.isNotBlank(env.getProperty("mq.exchange.autoDelete"))
+				? Boolean.valueOf(env.getProperty("mq.exchange.autoDelete").trim())
+				: false;
 
 		return new TopicExchange(name, durable, autoDelete);
 	}

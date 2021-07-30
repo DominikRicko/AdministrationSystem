@@ -56,7 +56,8 @@ public class MailMessageListenerAdapter extends MessageListenerAdapter {
 	}
 
 	/**
-	       * send email 
+	 * send email
+	 * 
 	 * @param to
 	 * @param subject
 	 * @param text
