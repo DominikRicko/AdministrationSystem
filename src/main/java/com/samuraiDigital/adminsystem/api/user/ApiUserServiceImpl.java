@@ -7,6 +7,7 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
@@ -66,7 +67,7 @@ public class ApiUserServiceImpl implements ApiUserService {
 		newUserResource.setAccount_expiration_date(user.getAccountExpirationDate().toString());
 		newUserResource.setCredentials_expiration_date(user.getCredentialsExpirationDate().toString());
 		newUserResource.setEnabled(user.isEnabled());
-		newUserResource.setGroups(user.getGroups().stream().map(it -> it.getName()).toList());
+		newUserResource.setGroups(user.getGroups().stream().map(it -> it.getName()).collect(Collectors.toList()));
 
 		if (userInfoOptional.isPresent()) {
 			UserInfo userInfo = userInfoOptional.get();
@@ -133,7 +134,7 @@ public class ApiUserServiceImpl implements ApiUserService {
 		newUserSecurity.setEnabled(user.getEnabled());
 		newUserSecurity.setAccountExpirationDate(LocalDate.parse(user.getAccount_expiration_date(), dateFormat));
 		newUserSecurity
-				.setCredentialsExpirationDate(LocalDate.from(dateFormat.parse(user.getCredentials_expiration_date())));
+		.setCredentialsExpirationDate(LocalDate.from(dateFormat.parse(user.getCredentials_expiration_date())));
 		newUserSecurity.setGroups(groups);
 
 		try {
@@ -179,7 +180,7 @@ public class ApiUserServiceImpl implements ApiUserService {
 		UserSecurityDetails userSecurity = userFromRepo.get();
 		userSecurity.setAccountExpirationDate(LocalDate.from(dateFormat.parse(user.getAccount_expiration_date())));
 		userSecurity
-				.setCredentialsExpirationDate(LocalDate.from(dateFormat.parse(user.getCredentials_expiration_date())));
+		.setCredentialsExpirationDate(LocalDate.from(dateFormat.parse(user.getCredentials_expiration_date())));
 		userSecurity.setEmail(user.getEmail());
 		userSecurity.setUsername(user.getUsername());
 		userSecurity.setEnabled(user.getEnabled());
