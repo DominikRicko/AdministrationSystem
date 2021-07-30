@@ -18,7 +18,7 @@ import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 
 import com.rabbitmq.client.ConnectionFactory;
-import com.samuraiDigital.adminsystem.email.MailMessageListenerAdapter;
+import com.samuraiDigital.adminsystem.email.adapters.MailMessageListenerAdapter;
 
 @Configuration
 @PropertySource(value = { "classpath:application.properties" })

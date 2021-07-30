@@ -1,4 +1,4 @@
-package com.samuraiDigital.adminsystem.email;
+package com.samuraiDigital.adminsystem.email.model;
 
 public class MailMessageModel {
 

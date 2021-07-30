@@ -1,7 +1,5 @@
 package com.samuraiDigital.adminsystem.email.services;
 
-import javax.annotation.Resource;
-
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
