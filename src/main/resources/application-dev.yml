@@ -26,3 +26,9 @@ mq:
     exclusive: false
     autoDelete: false
   routekey: email_routekey
+  
+mail:
+  host: localhost
+  port: 1025
+  username: test
+  password: test
