@@ -3,41 +3,41 @@ version: '3.1'
 
 services:
 
-    db:
-        image: mysql
-        command: 
-            - --default-authentication-plugin=mysql_native_password
-        restart: always
-        environment:
-            MYSQL_ROOT_PASSWORD: root
-            MYSQL_DATABASE: dev
-        volumes:
-            - ./MySQL:/var/lib/mysql
-            - ./scripts/mysql:/docker-entrypoint-initdb.d
-        ports:
-            - 3306:3306
-        restart: always
+	db:
+		image: mysql
+		command: 
+			- --default-authentication-plugin=mysql_native_password
+		restart: always
+		environment:
+			MYSQL_ROOT_PASSWORD: root
+			MYSQL_DATABASE: dev
+		volumes:
+			- ./MySQL:/var/lib/mysql
+			- ./scripts/mysql:/docker-entrypoint-initdb.d
+		ports:
+			- 3306:3306
+		restart: always
 
-    adminer:
-        image: adminer
-        restart: always
-        ports:
-          - 3000:8080
+	adminer:
+		image: adminer
+		restart: always
+		ports:
+			- 3000:8080
 
-    rabbitMQ:
-        image: rabbitmq:3-management
-        restart: always
-        hostname: my-rabbit
-        ports: 
-            - 15672:15672
-            - 5672:5672
-        volumes:
-            - ./rabbitmq/etc/:/etc/rabbitmq/
-            - ./rabbitmq/data:/var/lib/rabbitmq/mnesia/rabbit@my-rabbit
-            - ./rabbitmq/logs:/var/log/rabbitmq/log
+	rabbitMQ:
+		image: rabbitmq:3-management
+		restart: always
+		hostname: my-rabbit
+		ports: 
+			- 15672:15672
+			- 5672:5672
+		volumes:
+			- ./rabbitmq/etc/:/etc/rabbitmq/
+			- ./rabbitmq/data:/var/lib/rabbitmq/mnesia/rabbit@my-rabbit
+			- ./rabbitmq/logs:/var/log/rabbitmq/log
 
-    mailHog:
-        image: mailhog/mailhog
-        ports:
-            - 1025:1025
-            - 8025:8025
+	mailHog:
+		image: mailhog/mailhog
+		ports:
+			- 1025:1025
+			- 8025:8025

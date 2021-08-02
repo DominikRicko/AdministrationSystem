@@ -1,15 +1,15 @@
 #footer{
-    width: 100%;
-    display: inline-block;
+	width: 100%;
+	display: inline-block;
 }
 
 //footer trick
 body{ 
-    display:flex; 
-    flex-direction:column; 
-  }
-  
-  #footer{
-    margin-top:auto; 
-  }
+	display:flex; 
+	flex-direction:column; 
+}
+
+#footer{
+	margin-top:auto; 
+}
 //end footer trick
