@@ -14,6 +14,6 @@ public interface RandomUrlService {
 
 	public Optional<UrlDataModel> getModelFromUrl(String url);
 
-	public void RemoveDataModel(String url);
+	public void removeDataModel(String url);
 
 }

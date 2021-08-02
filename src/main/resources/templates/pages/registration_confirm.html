@@ -9,22 +9,18 @@
     <script src="http://kendo.cdn.telerik.com/2021.2.616/js/kendo.all.min.js"></script>
     <link rel="stylesheet" href="http://kendo.cdn.telerik.com/2021.2.616/styles/kendo.common.min.css">
     <link rel="stylesheet" href="http://unpkg.com/@progress/kendo-theme-bootstrap/dist/all.css" />
-    <title>AdminSystem | Password Reset</title>
+    <title>AdminSystem | Register</title>
     <link rel="stylesheet" href="/css/style.css">
 </head>
 
 <body>
     <div th:replace="/fragments/header :: header" th:remove="tag"></div>
     <section class="main">
-        <h1>Password Reset</h1>
-        <div>
-            Enter your email address, if there is an account registered on that email address, we will send a passsword
-            reset link via email.
-        </div>
-        <form action="/reset_password" method="post" id="formResetPassword"></form>
+        You have successfully confirmed your email and your account is now activated.
+        <a href="/login"><button data-role="kendoButton" id="btn_back">Login</button></a>
     </section>
     <div th:replace="/fragments/footer :: footer" th:remove="tag"></div>
-    <script src="/js/reset_password.js"></script>
+    <script src="/js/register_confirm.js"></script>
 </body>
 
 </html>

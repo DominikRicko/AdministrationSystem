@@ -1,44 +1,30 @@
-$("#formRegister").kendoForm({
-    validatable: { 
+$("#formResetPassword").kendoForm({
+    validatable: {
         validateOnBlur: true,
         validationSummary: true,
         errorTemplate: "Error",
     },
     orientation: "vertical",
-    formData:{
+    formData: {
         email: "",
-        username: "",
-        password: "",
-        repeatPassword: "",
     },
     items: [
         {
-            field: "email",
-            label: "Email: ",
-            validation: { email: true, required: true }
-        },
-        {
-            field: "username",
-            label: "Username: ",
-            validation: { required: true }
-        },
-        {
             field: "password",
-            label: "Password: ",
+            label: "New password: ",
             validation: { required: true }
         },
         {
             field: "repeatPassword",
             label: "Repeat password: ",
-            type: "password",
-            validation: { required: true }
         }
     ],
     buttonsTemplate: `
-    <button class="k-button k-primary k-form-submit" type="submit">Register</button>
+    <button class="k-button k-primary k-form-submit" type="submit">Reset password</button>
     <a href="/login"> <button class="k-button" type="button">Cancel</button></a>
     `
-})
+});
+
 $("#formRegister").kendoValidator({
     messages:{
         repeatPassword: "The passwords do not match."

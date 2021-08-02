@@ -5,21 +5,24 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.samuraiDigital.adminsystem.data.model.UserSecurityDetails;
 import com.samuraiDigital.adminsystem.security.model.UserCredentials;
 import com.samuraiDigital.adminsystem.security.services.RegistrationCheckerService;
 import com.samuraiDigital.adminsystem.security.services.RegistrationService;
+import com.samuraiDigital.adminsystem.web.services.RegistrationConfirmationService;
 
 @Controller
 public class RegistrationController {
 
 	private RegistrationCheckerService registrationChecker;
 	private RegistrationService registrationService;
+	private RegistrationConfirmationService confirmationService;
 
-	public RegistrationController(RegistrationCheckerService registrationChecker,
-			RegistrationService registrationService) {
+	public RegistrationController(RegistrationCheckerService registrationChecker, RegistrationService registrationService, RegistrationConfirmationService confirmationService) {
 		super();
 		this.registrationChecker = registrationChecker;
 		this.registrationService = registrationService;
+		this.confirmationService = confirmationService;
 	}
 
 	@PostMapping("/perform_register")
@@ -28,9 +31,11 @@ public class RegistrationController {
 
 		UserCredentials userCredentials = new UserCredentials(username, email, password);
 		if (this.registrationChecker.Check(userCredentials)) {
+
 			model.addAttribute("info", "Registration success, check your email for confirmation link.");
-			registrationService.register(userCredentials);
-			// TODO: Send email to user about registration confirmation
+			UserSecurityDetails user = registrationService.register(userCredentials);
+
+			confirmationService.requestConfirmation(user);
 
 			return "pages/login";
 		} else {

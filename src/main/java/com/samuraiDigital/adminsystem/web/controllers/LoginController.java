@@ -16,8 +16,4 @@ public class LoginController {
 		return "pages/register";
 	}
 
-	@RequestMapping("/reset_password")
-	public String getPasswordReset() {
-		return "pages/reset_password";
-	}
 }

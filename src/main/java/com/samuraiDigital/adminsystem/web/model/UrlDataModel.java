@@ -8,6 +8,7 @@ public class UrlDataModel {
 
 	private UrlDataAction action;
 	private Optional<UserSecurityDetails> userDetails;
+	private Optional<String> extra;
 
 	public UrlDataAction getAction() {
 		return action;
@@ -23,6 +24,14 @@ public class UrlDataModel {
 
 	public void setUserDetails(UserSecurityDetails userDetails) {
 		this.userDetails = Optional.of(userDetails);
+	}
+
+	public Optional<String> getExtra() {
+		return this.extra;
+	}
+
+	public void setExtra(String extra) {
+		this.extra = Optional.of(extra);
 	}
 
 }

@@ -12,6 +12,8 @@ import com.samuraiDigital.adminsystem.web.model.UrlDataModel;
 @Service
 public class RandomUrlServiceImpl implements RandomUrlService {
 
+	private static final String charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRSTVUXYZQ0123456789_-#$&";
+
 	private HashSet<String> urls = new HashSet<>();
 
 	private HashMap<String, UrlDataModel> urlMap = new HashMap<>();
@@ -19,10 +21,10 @@ public class RandomUrlServiceImpl implements RandomUrlService {
 	@Override
 	public String getRandomUrl() {
 
-		String randomUrl = RandomStringUtils.random(32);
+		String randomUrl = "/key/" + RandomStringUtils.random(32, charset);
 
 		while (urlExists(randomUrl)) {
-			randomUrl = RandomStringUtils.random(32);
+			randomUrl = "/key/" + RandomStringUtils.random(32);
 		}
 
 		urls.add(randomUrl);
@@ -47,7 +49,7 @@ public class RandomUrlServiceImpl implements RandomUrlService {
 	}
 
 	@Override
-	public void RemoveDataModel(String url) {
+	public void removeDataModel(String url) {
 		urlMap.remove(url);
 	}
 
