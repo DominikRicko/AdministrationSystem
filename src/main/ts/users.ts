@@ -167,7 +167,7 @@ grid.kendoGrid({
 	scrollable: true,
 	selectable: true,
 	toolbar: gridToolbar,
-	editable: true,
+	editable: grid.attr("write") == "true",
 	filterable: true,
 	groupable: true,
 	sortable: true,
