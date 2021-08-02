@@ -1,4 +1,3 @@
-
 function parseDate(input: any) {
 	for (const key in input) {
 
@@ -27,102 +26,118 @@ function checkEmail(val: string) {
 	return true;
 }
 
-$("#grid").kendoGrid({
-	columns: [
-		{
-			field: 'name',
-			width: '14%',
-			title: 'Name',
-			minResizableWidth: 70,
-		},
-		{
-			field: 'surname',
-			title: 'Surname',
-			width: '14%',
-			minResizableWidth: 70,
-		},
-		{
-			field: 'birthdate',
-			title: 'Birthdate',
-			width: '14%',
-			format: "{0:dd.MM.yyyy}",
-			minResizableWidth: 70,
-		},
-		{
-			field: 'groups',
-			title: 'Groups',
-			width: '14%',
-			minResizableWidth: 70,
-		},
-		{
-			field: 'email',
-			title: 'Email',
-			width: '25%',
-			minResizableWidth: 150,
-		},
-		{
-			field: 'username',
-			title: 'Username',
-			width: '25%',
-			minResizableWidth: 150,
-		},
-		{
-			field: 'enabled',
-			title: 'Enable',
-			width: '10%',
-			minResizableWidth: 60,
-		},
-		{
-			field: 'account_expiration_date',
-			title: 'Account Expires at',
-			width: '14%',
-			format: "{0:dd.MM.yyyy}",
-			minResizableWidth: 70,
-		},
-		{
-			field: 'credentials_expiration_date',
-			title: 'Credentials Expire at',
-			width: '14%',
-			format: "{0:dd.MM.yyyy}",
-			minResizableWidth: 70,
-		},
-		{
-			title: 'Commands',
-			width: '20%',
-			//@ts-ignore
-			command: ["destroy"],
-			minResizableWidth: 120,
-		}
-	],
+const gridColumns : kendo.ui.GridColumn[] = [
+	{
+		field: 'name',
+		width: '14%',
+		title: 'Name',
+		minResizableWidth: 70,
+	},
+	{
+		field: 'surname',
+		title: 'Surname',
+		width: '14%',
+		minResizableWidth: 70,
+	},
+	{
+		field: 'birthdate',
+		title: 'Birthdate',
+		width: '14%',
+		format: "{0:dd.MM.yyyy}",
+		minResizableWidth: 70,
+	},
+	{
+		field: 'groups',
+		title: 'Groups',
+		width: '14%',
+		minResizableWidth: 70,
+	},
+	{
+		field: 'email',
+		title: 'Email',
+		width: '25%',
+		minResizableWidth: 150,
+	},
+	{
+		field: 'username',
+		title: 'Username',
+		width: '25%',
+		minResizableWidth: 150,
+	},
+	{
+		field: 'enabled',
+		title: 'Enabled',
+		width: '10%',
+		minResizableWidth: 60,
+	},
+	{
+		field: 'account_expiration_date',
+		title: 'Account Expires at',
+		width: '14%',
+		format: "{0:dd.MM.yyyy}",
+		minResizableWidth: 70,
+	},
+	{
+		field: 'credentials_expiration_date',
+		title: 'Credentials Expire at',
+		width: '14%',
+		format: "{0:dd.MM.yyyy}",
+		minResizableWidth: 70,
+	}
+];
+
+const transport: kendo.data.DataSourceTransport = {};
+transport.read = {
+	url: "/i/api/v1/users/",
+	data: {
+		format: "json"
+	},
+	type: "GET"
+};
+
+const gridToolbar : string[] | kendo.ui.GridToolbarItem[] = ['search'];
+
+const grid = $("#grid");
+if (grid.attr("write") == "true") {
+
+	gridColumns.push({
+		title: 'Commands',
+		width: '20%',
+		//@ts-ignore
+		command: ["destroy"],
+		minResizableWidth: 120,
+	});
+
+	transport.create = {
+		url: "/i/api/v1/users/",
+		type: "POST",
+		data: (input: any) => parseDate(input),
+		dataType: "json"
+	};
+
+	transport.destroy = {
+		url: (data: any) => "/i/api/v1/users/" + data.id,
+		type: "DELETE"
+	};
+
+	transport.update = {
+		url: (data: any) => "/i/api/v1/users/" + data.id,
+		data: (input: any) => parseDate(input),
+		dataType: "json",
+		type: "PUT",
+	};
+
+	//@ts-ignore
+	transport.batch = true;
+
+	gridToolbar.push("create", "save", "cancel");
+
+}
+
+grid.kendoGrid({
+	columns: gridColumns,
 	dataSource: {
-		transport: {
-			read: {
-				url: "/i/api/v1/users/",
-				data: {
-					format: "json"
-				},
-				type: "GET"
-			},
-			create: {
-				url: "/i/api/v1/users/",
-				type: "POST",
-				data: (input: any) => parseDate(input),
-				dataType: "json",
-
-			},
-			destroy: {
-				url: (data: any) => "/i/api/v1/users/" + data.id,
-				type: "DELETE",
-
-			},
-			update: {
-				url: (data: any) => "/i/api/v1/users/" + data.id,
-				data: (input: any) => parseDate(input),
-				dataType: "json",
-				type: "PUT",
-			},
-			batch: true,
-		},
+		transport: transport,
 		schema: {
 			model: {
 				id: 'id',
@@ -151,7 +166,7 @@ $("#grid").kendoGrid({
 	},
 	scrollable: true,
 	selectable: true,
-	toolbar: ["create", "save", "cancel", "search"],
+	toolbar: gridToolbar,
 	editable: true,
 	filterable: true,
 	groupable: true,

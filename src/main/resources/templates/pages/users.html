@@ -20,7 +20,7 @@
 
 	<div th:replace="/fragments/header :: header" th:remove="tag"></div>
 	<section class="gridSection">
-		<div id="grid"></div>
+		<div id="grid" th:write="${#authorization.expression('hasAuthority(''WRITE_PROFILES'')')}"></div>
 	</section>
 	<div th:replace="/fragments/footer :: footer" th:remove="tag"></div>
 
