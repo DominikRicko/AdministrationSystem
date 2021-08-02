@@ -15,12 +15,12 @@ import org.hibernate.annotations.CascadeType;
 public class UserInfo {
 
 	@Id
-	private Long id;
+	private Integer id;
 	private String name;
 	private String surname;
 	private LocalDate birthdate;
 	private String address;
-	
+
 	@OneToOne(fetch = FetchType.EAGER)
 	@PrimaryKeyJoinColumn
 	@Cascade(CascadeType.ALL)
@@ -38,11 +38,11 @@ public class UserInfo {
 		this.address = address;
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -85,5 +85,11 @@ public class UserInfo {
 	public void setUserSecurity(UserSecurityDetails userSecurity) {
 		this.userSecurity = userSecurity;
 	}
-	
+
+	@Override
+	public String toString() {
+		return "UserInfo [id=" + ((id != null) ? (id) : "Unassigned") + ", name=" + name + ", surname=" + surname
+				+ ", birthdate=" + birthdate + ", address=" + address + ", userSecurity=" + userSecurity + "]";
+	}
+
 }

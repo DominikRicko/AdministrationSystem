@@ -40,6 +40,6 @@ src/main/resources/static/js
 src/main/resources/static/css
 
 ### Generated dependency programs ###
-MySQL
+/MySQL
 rabbitmq/data
 rabbitmq/logs

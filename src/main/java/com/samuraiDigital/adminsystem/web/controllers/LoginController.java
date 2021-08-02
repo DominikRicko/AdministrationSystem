@@ -10,14 +10,10 @@ public class LoginController {
 	public String getLogin() {
 		return "pages/login";
 	}
-	
+
 	@RequestMapping("/register")
 	public String getRegister() {
 		return "pages/register";
 	}
-	
-	@RequestMapping("/reset_password")
-	public String getPasswordReset() {
-		return "pages/reset_password";
-	}
+
 }

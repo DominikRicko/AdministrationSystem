@@ -23,15 +23,15 @@ import org.hibernate.annotations.CascadeType;
 import org.springframework.security.core.GrantedAuthority;
 
 @Entity
-public class UserSecurityDetails implements org.springframework.security.core.userdetails.UserDetails{
-	
+public class UserSecurityDetails implements org.springframework.security.core.userdetails.UserDetails {
+
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	private Integer id;
 	private String username;
 	private String email;
 	private String passwordHash;
@@ -42,24 +42,22 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 	@OneToOne(mappedBy = "userSecurity")
 	@PrimaryKeyJoinColumn
 	private UserInfo user;
-	
+
 	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "group_members", 
-		joinColumns = @JoinColumn(name = "id_user"), 
-		inverseJoinColumns = @JoinColumn(name = "id_group"))
+	@JoinTable(name = "group_members", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_group"))
 	@Cascade(CascadeType.ALL)
 	private Set<SecurityGroup> groups = new HashSet<>();
 
 	public UserSecurityDetails() {
 		super();
 	}
-	
+
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
-		
-		return groups.stream().map(SecurityGroup::getAuthorities).
-				flatMap(Set<Authority>::stream).distinct().collect(Collectors.toSet());
-		
+
+		return groups.stream().map(SecurityGroup::getAuthorities).flatMap(Set<Authority>::stream).distinct()
+				.collect(Collectors.toSet());
+
 	}
 
 	@Override
@@ -92,11 +90,11 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 		return this.enabled;
 	}
 
-	public Long getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -151,9 +149,17 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
+
 	public void addGroup(SecurityGroup group) {
 		this.groups.add(group);
+	}
+
+	@Override
+	public String toString() {
+		return "UserSecurityDetails [id=" + ((id != null) ? (id) : "Unassigned") + ", username=" + username + ", email="
+				+ email + ", passwordHash=" + passwordHash + ", enabled=" + enabled + ", accountExpirationDate="
+				+ accountExpirationDate + ", credentialsExpirationDate=" + credentialsExpirationDate + ", user=" + user
+				+ ", groups=" + groups + "]";
 	}
 
 }

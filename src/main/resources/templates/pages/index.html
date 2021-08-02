@@ -20,8 +20,7 @@
 
 	<div th:replace="/fragments/header :: header" th:remove="tag"></div>
 	<section class="main">
-		<h1 class="mainHeader" th:text= "'Welcome ${user}!'"></h1>
-		<div id="test">Hello World</div>
+		<h1 class="mainHeader" >Welcome, <span th:text="${#authentication.name}"></span>.</h1>
 	</section>
 	<div th:replace="/fragments/footer :: footer" th:remove="tag"></div>
 

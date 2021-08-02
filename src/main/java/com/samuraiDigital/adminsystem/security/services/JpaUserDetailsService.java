@@ -11,10 +11,10 @@ import com.samuraiDigital.adminsystem.data.model.UserSecurityDetails;
 import com.samuraiDigital.adminsystem.data.repositories.UserSecurityDetailsRepository;
 
 @Service
-public class JpaUserDetailsService implements UserDetailsService{
+public class JpaUserDetailsService implements UserDetailsService {
 
 	private UserSecurityDetailsRepository userRepository;
-	
+
 	public JpaUserDetailsService(UserSecurityDetailsRepository userRepository) {
 		super();
 		this.userRepository = userRepository;
@@ -22,15 +22,15 @@ public class JpaUserDetailsService implements UserDetailsService{
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		
+
 		Optional<UserSecurityDetails> user = userRepository.findByUsername(username);
-		
-		if(user.isEmpty()) {
+
+		if (user.isEmpty()) {
 			throw new UsernameNotFoundException(username);
 		}
-		
+
 		return user.get();
-		
+
 	}
 
 }

@@ -10,11 +10,11 @@ import com.samuraiDigital.adminsystem.data.repositories.UserSecurityDetailsRepos
 import com.samuraiDigital.adminsystem.security.model.UserCredentials;
 
 @Service
-public class RegistrationServiceImpl implements RegistrationService{
+public class RegistrationServiceImpl implements RegistrationService {
 
 	private UserSecurityDetailsRepository userRepository;
 	private PasswordEncoder encoder;
-	
+
 	public RegistrationServiceImpl(UserSecurityDetailsRepository userRepository, PasswordEncoder encoder) {
 		super();
 		this.userRepository = userRepository;
@@ -22,20 +22,19 @@ public class RegistrationServiceImpl implements RegistrationService{
 	}
 
 	@Override
-	public void register(UserCredentials userCredentials) {
-		
+	public UserSecurityDetails register(UserCredentials userCredentials) {
+
 		UserSecurityDetails newUser = new UserSecurityDetails();
-    
-		//TODO: change enabled to false after email sending service is done.
+
 		newUser.setEmail(userCredentials.getEmail());
 		newUser.setUsername(userCredentials.getUsername());
 		newUser.setPasswordHash(encoder.encode(userCredentials.getPassword()));
-		newUser.setEnabled(true);
+		newUser.setEnabled(false);
 		newUser.setAccountExpirationDate(LocalDateTime.now().plusDays(30).toLocalDate());
 		newUser.setCredentialsExpirationDate(LocalDateTime.now().plusDays(30).toLocalDate());
-		
-		userRepository.save(newUser);
-		
+
+		return userRepository.save(newUser);
+
 	}
-	
+
 }

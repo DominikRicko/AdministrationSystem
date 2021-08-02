@@ -1,5 +1,9 @@
 $("#formResetPassword").kendoForm({
-    validatable: { validationSummary: true},
+    validatable: { 
+        validateOnBlur: true,
+        validationSummary: true,
+        errorTemplate: "Error",
+    },
     orientation: "vertical",
     formData:{
         email: "",
