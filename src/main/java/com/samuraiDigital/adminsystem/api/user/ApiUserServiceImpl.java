@@ -19,6 +19,8 @@ import com.samuraiDigital.adminsystem.data.model.UserSecurityDetails;
 import com.samuraiDigital.adminsystem.data.repositories.SecurityGroupRepository;
 import com.samuraiDigital.adminsystem.data.repositories.UserInfoRepository;
 import com.samuraiDigital.adminsystem.data.repositories.UserSecurityDetailsRepository;
+import com.samuraiDigital.adminsystem.web.services.PasswordResetService;
+import com.samuraiDigital.adminsystem.web.services.RegistrationConfirmationService;
 
 @Service
 public class ApiUserServiceImpl implements ApiUserService {
@@ -27,13 +29,16 @@ public class ApiUserServiceImpl implements ApiUserService {
 	private UserInfoRepository userInfoRepository;
 	private SecurityGroupRepository groupRepository;
 	private DateTimeFormatter dateFormat = DateTimeFormatter.ISO_DATE_TIME;
+	private RegistrationConfirmationService confirmationService;
+	private PasswordResetService passwordResetService;
 
-	public ApiUserServiceImpl(UserSecurityDetailsRepository userDetailsRepository,
-			UserInfoRepository userInfoRepository, SecurityGroupRepository groupRepository) {
+	public ApiUserServiceImpl(UserSecurityDetailsRepository userDetailsRepository, UserInfoRepository userInfoRepository, SecurityGroupRepository groupRepository, RegistrationConfirmationService confirmationService, PasswordResetService passwordResetService) {
 		super();
 		this.userDetailsRepository = userDetailsRepository;
 		this.userInfoRepository = userInfoRepository;
 		this.groupRepository = groupRepository;
+		this.confirmationService = confirmationService;
+		this.passwordResetService = passwordResetService;
 	}
 
 	private Set<SecurityGroup> parseAndSaveGroups(Collection<String> groups) {
@@ -156,6 +161,12 @@ public class ApiUserServiceImpl implements ApiUserService {
 			throw new HttpClientErrorException(HttpStatus.UNPROCESSABLE_ENTITY,
 					"Could not process request, either database server is unavailable or conflicts with username or email.");
 		}
+
+		if (!user.getEnabled()) {
+			confirmationService.requestConfirmation(newUserSecurity);
+		}
+
+		passwordResetService.requestPasswordReset(newUserSecurity.getEmail());
 
 		user.setId(newUserSecurity.getId());
 		return user;

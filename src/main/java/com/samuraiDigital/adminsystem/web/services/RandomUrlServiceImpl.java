@@ -12,7 +12,7 @@ import com.samuraiDigital.adminsystem.web.model.UrlDataModel;
 @Service
 public class RandomUrlServiceImpl implements RandomUrlService {
 
-	private static final String charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRSTVUXYZQ0123456789_-#$&";
+	private static final String charset = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPRSTVUXYZQ0123456789_-~.";
 
 	private HashSet<String> urls = new HashSet<>();
 
