@@ -34,7 +34,7 @@ public class PasswordResetServiceImpl implements PasswordResetService {
 
 		String correctUrl = "http://localhost:8080" + randomUrl;
 		JSONObject jsonObject = new JSONObject();
-		jsonObject.appendField("from", "no-reply@adminsys.com");
+		jsonObject.appendField("from", "no-reply@adminsystem.com");
 		jsonObject.appendField("to", user.getEmail());
 		jsonObject.appendField("text", String.format("Hello, %s.\nYou have requested an email change, please click on this link to change your password.\nLink: %s", user.getUsername(), correctUrl));
 		jsonObject.appendField("subject", "Password reset");
