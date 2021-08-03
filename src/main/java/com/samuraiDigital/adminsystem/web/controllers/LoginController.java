@@ -11,9 +11,4 @@ public class LoginController {
 		return "pages/login";
 	}
 
-	@RequestMapping("/register")
-	public String getRegister() {
-		return "pages/register";
-	}
-
 }
