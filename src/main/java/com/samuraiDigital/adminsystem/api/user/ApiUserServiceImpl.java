@@ -175,7 +175,12 @@ public class ApiUserServiceImpl implements ApiUserService {
 	@Override
 	public void deleteUserById(Integer id) {
 
-		userInfoRepository.deleteById(id);
+		try {
+			userInfoRepository.deleteById(id);
+		} catch (Exception e) {
+			//TODO: Should probably do something about this table relationship.
+			userDetailsRepository.deleteById(id);
+		}
 
 	}
 

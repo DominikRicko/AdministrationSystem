@@ -3906,7 +3906,7 @@ declare namespace kendo.ui {
         columnResizeHandleWidth?: number;
         columns?: GridColumn[];
         columnMenu?: boolean|GridColumnMenu;
-        dataSource?: any|any|kendo.data.DataSource;
+        dataSource?: kendo.data.DataSource | any;
         detailTemplate?: string|Function;
         editable?: boolean|GridEditable;
         excel?: GridExcel;

@@ -1,3 +1,5 @@
+import CreateError from "./messages/errorbox";
+
 function parseDate(input: any) {
 	for (const key in input) {
 
@@ -9,9 +11,6 @@ function parseDate(input: any) {
 			input[key] = (input[key] as Date).toISOString();
 		}
 	}
-
-	console.log(input);
-
 	return JSON.stringify(input);
 }
 
@@ -162,6 +161,9 @@ grid.kendoGrid({
 					credentials_expiration_date: { type: 'date' },
 				}
 			},
+		},
+		error: (e: kendo.data.DataSourceErrorEvent) => {
+			CreateError(e.xhr.responseText);
 		}
 	},
 	scrollable: true,

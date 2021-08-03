@@ -4,8 +4,6 @@ import java.util.Optional;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +15,7 @@ import com.samuraiDigital.adminsystem.web.model.UrlDataModel;
 import com.samuraiDigital.adminsystem.web.services.PasswordResetService;
 import com.samuraiDigital.adminsystem.web.services.RandomUrlService;
 import com.samuraiDigital.adminsystem.web.services.RegistrationConfirmationService;
+import com.samuraiDigital.adminsystem.web.services.WebMessageService;
 
 @Controller
 public class RandomUrlController {
@@ -24,12 +23,16 @@ public class RandomUrlController {
 	private RandomUrlService randomUrlService;
 	private RegistrationConfirmationService confirmationService;
 	private PasswordResetService passwordResetService;
+	private WebMessageService errorService;
+	private WebMessageService infoService;
 
-	public RandomUrlController(RandomUrlService randomUrlService, RegistrationConfirmationService confirmationService, PasswordResetService passwordResetService) {
+	public RandomUrlController(RandomUrlService randomUrlService, RegistrationConfirmationService confirmationService, PasswordResetService passwordResetService, WebMessageService errorService, WebMessageService infoService) {
 		super();
 		this.randomUrlService = randomUrlService;
 		this.confirmationService = confirmationService;
 		this.passwordResetService = passwordResetService;
+		this.errorService = errorService;
+		this.infoService = infoService;
 	}
 
 	@RequestMapping(value = "/key/*", method = RequestMethod.GET)
@@ -40,7 +43,10 @@ public class RandomUrlController {
 		Optional<UrlDataModel> modelOptional = randomUrlService.getModelFromUrl(url);
 
 		if (modelOptional.isEmpty()) {
-			return "error";
+
+			errorService.addMessageToModel(modelUI, "Unknown URL.");
+
+			return "pages/login";
 		}
 
 		UrlDataModel model = modelOptional.get();
@@ -53,7 +59,9 @@ public class RandomUrlController {
 				confirmationService.confirmRegistration(model.getUserDetails().get());
 				randomUrlService.removeDataModel(url);
 
-				return "pages/registration_confirm";
+				infoService.addMessageToModel(modelUI, "Your account has been confirmed, please log in.");
+
+				return "pages/login";
 			case RESET_PASSWORD:
 
 				String randomUrl = randomUrlService.getRandomUrl();
@@ -68,21 +76,26 @@ public class RandomUrlController {
 
 				return "pages/reset_password_started";
 			default:
-				return "error";
+
+				errorService.addMessageToModel(modelUI, "Unknown URL action.");
+				return "pages/login";
 
 		}
 
 	}
 
 	@RequestMapping(value = "/key/*", method = RequestMethod.POST)
-	public ResponseEntity<?> resolvePostUrl(HttpServletRequest request, Model modelUI, @RequestParam("password") String newPassword) {
+	public String resolvePostUrl(HttpServletRequest request, Model modelUI, @RequestParam("password") String newPassword) {
 
 		String url = request.getRequestURI();
 
 		Optional<UrlDataModel> modelOptional = randomUrlService.getModelFromUrl(url);
 
 		if(modelOptional.isEmpty()) {
-			return new ResponseEntity<>("Error, unknown url.", HttpStatus.NOT_FOUND);
+
+			errorService.addMessageToModel(modelUI, "URL not valid.");
+
+			return "/pages/login";
 		}
 
 		UrlDataModel model = modelOptional.get();
@@ -96,11 +109,15 @@ public class RandomUrlController {
 				randomUrlService.removeDataModel(url);
 				randomUrlService.removeDataModel(model.getExtra().get());
 
-				return new ResponseEntity<>("Password reset.", HttpStatus.NO_CONTENT);
+				infoService.addMessageToModel(modelUI, "Your password has been successfully changed, please log in.");
+
+				return "/pages/login";
 
 			default:
 
-				return new ResponseEntity<>("Not found.", HttpStatus.NOT_FOUND);
+				errorService.addMessageToModel(modelUI, "Unknown URL action.");
+
+				return "/pages/login";
 		}
 
 
