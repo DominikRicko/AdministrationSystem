@@ -1,5 +1,7 @@
 package com.samuraiDigital.adminsystem.web.controllers;
 
+import java.security.Principal;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -32,7 +34,12 @@ public class RegistrationController {
 	}
 
 	@RequestMapping("/register")
-	public String getRegister() {
+	public String getRegister(Principal principal) {
+
+		if (principal != null) {
+			return "redirect:/index";
+		}
+
 		return "pages/register";
 	}
 
