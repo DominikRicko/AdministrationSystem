@@ -15,12 +15,19 @@ img{
 }
 
 section.main{
-	width: 50%;
 	margin: auto;
 }
 
 .mainHeader{
 	font-size: xx-large;
+}
+
+.circleImage{
+	border-radius: 50%;
+}
+
+.template{
+	display: none;
 }
 
 @import "./fragments/appbar.scss";
@@ -32,3 +39,4 @@ section.main{
 @import "./pages/register.scss";
 @import "./pages/reset_password.scss";
 @import "./pages/users.scss";
+@import "./pages/profile.scss";
