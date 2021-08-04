@@ -2,6 +2,7 @@ package com.samuraiDigital.adminsystem.api.user;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -32,6 +33,7 @@ public class ApiUserController {
 	@Operation(summary = "Get all users.")
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "200", description = "Fetched all users.", content = @Content(mediaType = "application/json")) })
+	@PreAuthorize("hasAuthority('READ_PROFILES')")
 	public ResponseEntity<?> getUsers() {
 		return new ResponseEntity<>(resourceService.getUsers(), HttpStatus.OK);
 	}
@@ -42,8 +44,8 @@ public class ApiUserController {
 			@ApiResponse(responseCode = "200", description = "Found the user.", content = @Content(mediaType = "application/json")),
 			@ApiResponse(responseCode = "404", description = "User not found.", content = @Content(mediaType = "none")),
 			@ApiResponse(responseCode = "400", description = "Did not receive an id", content = @Content(mediaType = "none")),
-
 	})
+	@PreAuthorize("hasAuthority('WRITE_PROFILES')")
 	public ResponseEntity<?> getUser(@PathVariable @Parameter Integer id) {
 
 		ApiUserResource user = resourceService.getUser(id);
@@ -58,6 +60,7 @@ public class ApiUserController {
 			@ApiResponse(responseCode = "201", description = "User created.", content = @Content(mediaType = "application/json")),
 			@ApiResponse(responseCode = "418", description = "Error creating a user, either username or email already exists in database.", content = @Content(mediaType = "none")),
 			@ApiResponse(responseCode = "422", description = "Failed creating a user.") })
+	@PreAuthorize("hasAuthority('WRITE_PROFILES')")
 	public ResponseEntity<?> createUser(ApiUserResource user) {
 
 		ApiUserResource newUserResource = resourceService.saveUser(user);
@@ -71,6 +74,7 @@ public class ApiUserController {
 	@ApiResponses(value = {
 			@ApiResponse(responseCode = "204", description = "User successfully deleted.", content = @Content(mediaType = "none")),
 			@ApiResponse(responseCode = "404", description = "User not found.", content = @Content(mediaType = "none")) })
+	@PreAuthorize("hasAuthority('WRITE_PROFILES')")
 	public ResponseEntity<?> removeUser(@PathVariable @Parameter Integer userId) {
 
 		resourceService.deleteUserById(userId);
@@ -84,7 +88,7 @@ public class ApiUserController {
 			@ApiResponse(responseCode = "201", description = "User succuessfully updated.", content = @Content(mediaType = "application/json")),
 			@ApiResponse(responseCode = "418", description = "User could not be updated, check username and email.", content = @Content(mediaType = "none")),
 			@ApiResponse(responseCode = "422", description = "Failed creating a user.") })
-
+	@PreAuthorize("hasAuthority('WRITE_PROFILES')")
 	public ResponseEntity<?> updateUser(@PathVariable @Parameter Integer userId, ApiUserResource user) {
 
 		ApiUserResource newUserResource = resourceService.updateUser(userId, user);
