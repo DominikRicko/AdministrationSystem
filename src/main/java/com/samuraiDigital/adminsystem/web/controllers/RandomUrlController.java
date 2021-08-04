@@ -5,10 +5,10 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.samuraiDigital.adminsystem.web.model.UrlDataAction;
 import com.samuraiDigital.adminsystem.web.model.UrlDataModel;
@@ -36,7 +36,7 @@ public class RandomUrlController {
 	}
 
 	@RequestMapping(value = "/key/*", method = RequestMethod.GET)
-	public String resolveUrl(HttpServletRequest request, Model modelUI) {
+	public String resolveUrl(HttpServletRequest request, RedirectAttributes modelUI) {
 
 		String url = request.getRequestURI();
 
@@ -46,7 +46,7 @@ public class RandomUrlController {
 
 			errorService.addMessageToModel(modelUI, "Unknown URL.");
 
-			return "pages/login";
+			return "redirect:/login";
 		}
 
 		UrlDataModel model = modelOptional.get();
@@ -61,7 +61,7 @@ public class RandomUrlController {
 
 				infoService.addMessageToModel(modelUI, "Your account has been confirmed, please log in.");
 
-				return "pages/login";
+				return "redirect:/login";
 			case RESET_PASSWORD:
 
 				String randomUrl = randomUrlService.getRandomUrl();
@@ -74,18 +74,18 @@ public class RandomUrlController {
 				modelUI.addAttribute("requestUrl", randomUrl);
 				randomUrlService.bindModelToUrl(randomUrl, dataModel);
 
-				return "pages/reset_password_started";
+				return "redirect:/reset_password_started";
 			default:
 
 				errorService.addMessageToModel(modelUI, "Unknown URL action.");
-				return "pages/login";
+				return "redirect:/login";
 
 		}
 
 	}
 
 	@RequestMapping(value = "/key/*", method = RequestMethod.POST)
-	public String resolvePostUrl(HttpServletRequest request, Model modelUI, @RequestParam("password") String newPassword) {
+	public String resolvePostUrl(HttpServletRequest request, RedirectAttributes modelUI, @RequestParam("password") String newPassword) {
 
 		String url = request.getRequestURI();
 
@@ -95,7 +95,7 @@ public class RandomUrlController {
 
 			errorService.addMessageToModel(modelUI, "URL not valid.");
 
-			return "/pages/login";
+			return "redirect:/login";
 		}
 
 		UrlDataModel model = modelOptional.get();
@@ -111,13 +111,13 @@ public class RandomUrlController {
 
 				infoService.addMessageToModel(modelUI, "Your password has been successfully changed, please log in.");
 
-				return "/pages/login";
+				return "redirect:/login";
 
 			default:
 
 				errorService.addMessageToModel(modelUI, "Unknown URL action.");
 
-				return "/pages/login";
+				return "redirect:/login";
 		}
 
 

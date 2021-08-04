@@ -1,10 +1,10 @@
 package com.samuraiDigital.adminsystem.web.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.samuraiDigital.adminsystem.data.model.UserSecurityDetails;
 import com.samuraiDigital.adminsystem.security.model.UserCredentials;
@@ -37,7 +37,7 @@ public class RegistrationController {
 	}
 
 	@PostMapping("/perform_register")
-	public String register(Model model, @RequestParam("email") String email, @RequestParam("username") String username,
+	public String register(RedirectAttributes model, @RequestParam("email") String email, @RequestParam("username") String username,
 			@RequestParam("password") String password) {
 
 		UserCredentials userCredentials = new UserCredentials(username, email, password);
@@ -48,12 +48,12 @@ public class RegistrationController {
 
 			confirmationService.requestConfirmation(user);
 
-			return "pages/login";
+			return "redirect:/login";
 		} else {
 
 			errorService.addMessageToModel(model, "Could not register account, either email is being used, username is taken, or database has lost connection.");
 
-			return "pages/register";
+			return "redirect:/register";
 		}
 
 	}

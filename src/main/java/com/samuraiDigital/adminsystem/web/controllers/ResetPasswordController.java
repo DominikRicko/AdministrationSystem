@@ -1,10 +1,10 @@
 package com.samuraiDigital.adminsystem.web.controllers;
 
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.samuraiDigital.adminsystem.web.services.PasswordResetService;
 import com.samuraiDigital.adminsystem.web.services.WebMessageService;
@@ -29,13 +29,13 @@ public class ResetPasswordController {
 	}
 
 	@RequestMapping(value = "/reset_password", method = RequestMethod.POST)
-	public String startPasswordReset(@RequestParam("email") String email, Model model) {
+	public String startPasswordReset(@RequestParam("email") String email, RedirectAttributes model) {
 
 		passwordResetService.requestPasswordReset(email);
 
 		infoService.addMessageToModel(model, "Check your email for password reset link, in case you cannot find it, check spam folder, otherwise you sent us a wrong email.");
 
-		return "pages/login";
+		return "redirect:/login";
 	}
 
 }
