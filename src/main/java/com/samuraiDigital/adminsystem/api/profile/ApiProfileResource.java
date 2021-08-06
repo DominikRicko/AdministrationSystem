@@ -33,7 +33,7 @@ public class ApiProfileResource {
 	private String account_expiration_date;
 
 	@Schema(name = "credentials_expiration_date", type = "Date", required = true)
-	private String credentials_Expiration_date;
+	private String credentials_expiration_date;
 
 	@Schema(name = "enabled", type = "boolean", required = true)
 	private Boolean enabled;
@@ -108,12 +108,12 @@ public class ApiProfileResource {
 		this.account_expiration_date = account_expiration_date;
 	}
 
-	public String getCredentials_Expiration_date() {
-		return credentials_Expiration_date;
+	public String getCredentials_expiration_date() {
+		return credentials_expiration_date;
 	}
 
-	public void setCredentials_Expiration_date(String credentials_Expiration_date) {
-		this.credentials_Expiration_date = credentials_Expiration_date;
+	public void setCredentials_expiration_date(String credentials_Expiration_date) {
+		this.credentials_expiration_date = credentials_Expiration_date;
 	}
 
 	public Boolean getEnabled() {

@@ -4,7 +4,6 @@ import java.util.Optional;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -44,32 +43,6 @@ public class ApiProfileController {
 
 		if (optionalUser.isEmpty()) {
 			return new ResponseEntity<>("Not logged in, and no passing argument", HttpStatus.BAD_REQUEST);
-		}
-
-		user = optionalUser.get();
-
-		ApiProfileResource profile = apiProfileService.convertToResource(user);
-
-		return new ResponseEntity<>(profile, HttpStatus.OK);
-
-	}
-
-	@RequestMapping(method = RequestMethod.GET)
-	@PreAuthorize("hasAuthority('READ_PROFILES')")
-	public ResponseEntity<?> getForeignProfile(@RequestParam Integer id) {
-
-		UserSecurityDetails user;
-
-		if (id == null) {
-
-			return new ResponseEntity<>("Missing argument", HttpStatus.BAD_REQUEST);
-
-		}
-		Optional<UserSecurityDetails> optionalUser;
-		optionalUser = detailsRepository.findById(id);
-
-		if (optionalUser.isEmpty()) {
-			return new ResponseEntity<>("User not found.", HttpStatus.NOT_FOUND);
 		}
 
 		user = optionalUser.get();

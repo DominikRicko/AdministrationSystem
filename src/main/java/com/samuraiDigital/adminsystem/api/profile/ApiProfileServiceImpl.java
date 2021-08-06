@@ -6,6 +6,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import org.springframework.http.HttpStatus;
+import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpClientErrorException;
 
 import com.samuraiDigital.adminsystem.data.model.SecurityGroup;
@@ -13,6 +14,7 @@ import com.samuraiDigital.adminsystem.data.model.UserInfo;
 import com.samuraiDigital.adminsystem.data.model.UserSecurityDetails;
 import com.samuraiDigital.adminsystem.data.repositories.UserSecurityDetailsRepository;
 
+@Service
 public class ApiProfileServiceImpl implements ApiProfileService {
 
 	private UserSecurityDetailsRepository detailsRepository;
@@ -31,9 +33,9 @@ public class ApiProfileServiceImpl implements ApiProfileService {
 		userProfile.setUsername(user.getUsername());
 		userProfile.setEmail(user.getEmail());
 		userProfile.setAccount_expiration_date(user.getAccountExpirationDate().toString());
-		userProfile.setCredentials_Expiration_date(user.getCredentialsExpirationDate().toString());
+		userProfile.setCredentials_expiration_date(user.getCredentialsExpirationDate().toString());
 		userProfile.setEnabled(user.isEnabled());
-		userProfile.setGroups(user.getGroups().stream().map(it -> it.toString()).collect(Collectors.toSet()));
+		userProfile.setGroups(user.getGroups().stream().map(it -> it.getName()).collect(Collectors.toSet()));
 		userProfile.setPrivileges(user.getAuthorities().stream().map(it -> it.getAuthority()).collect(Collectors.toSet()));
 
 		Optional<UserInfo> userInfoOptional = user.getUser();
@@ -75,7 +77,7 @@ public class ApiProfileServiceImpl implements ApiProfileService {
 		}
 
 		userDetails.setAccountExpirationDate(LocalDate.parse(user.getAccount_expiration_date(), dateFormat));
-		userDetails.setCredentialsExpirationDate(LocalDate.parse(user.getCredentials_Expiration_date(), dateFormat));
+		userDetails.setCredentialsExpirationDate(LocalDate.parse(user.getCredentials_expiration_date(), dateFormat));
 		userDetails.setEmail(user.getEmail());
 		userDetails.setEnabled(user.getEnabled());
 		userDetails.setGroups(user.getGroups().stream().map(it -> new SecurityGroup(it)).collect(Collectors.toSet()));
