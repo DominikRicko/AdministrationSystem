@@ -20,7 +20,7 @@ import org.springframework.security.core.GrantedAuthority;
 public class Authority implements GrantedAuthority {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 
@@ -96,7 +96,7 @@ public class Authority implements GrantedAuthority {
 	@Override
 	public String toString() {
 		return "Authority [id=" + ((id != null) ? (id) : "Unassigned") + ", name=" + name + ", description="
-				+ description + ", groups=" + groups + "]";
+				+ description + "]";
 	}
 
 }

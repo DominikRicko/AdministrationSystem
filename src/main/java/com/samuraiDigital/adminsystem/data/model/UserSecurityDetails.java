@@ -26,7 +26,7 @@ import org.springframework.security.core.GrantedAuthority;
 public class UserSecurityDetails implements org.springframework.security.core.userdetails.UserDetails {
 
 	/**
-	 * 
+	 *
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
@@ -158,8 +158,8 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 	public String toString() {
 		return "UserSecurityDetails [id=" + ((id != null) ? (id) : "Unassigned") + ", username=" + username + ", email="
 				+ email + ", passwordHash=" + passwordHash + ", enabled=" + enabled + ", accountExpirationDate="
-				+ accountExpirationDate + ", credentialsExpirationDate=" + credentialsExpirationDate + ", user=" + user
-				+ ", groups=" + groups + "]";
+				+ accountExpirationDate + ", credentialsExpirationDate=" + credentialsExpirationDate + ", groups=" + groups + "]";
 	}
+
 
 }

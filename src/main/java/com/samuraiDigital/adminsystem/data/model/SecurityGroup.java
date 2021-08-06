@@ -85,7 +85,7 @@ public class SecurityGroup {
 	@Override
 	public String toString() {
 		return "SecurityGroup [id=" + ((id != null) ? (id) : "Unassigned") + ", name=" + name + ", authorities="
-				+ authorities + ", members=" + members + "]";
+				+ authorities + "]";
 	}
 
 }
