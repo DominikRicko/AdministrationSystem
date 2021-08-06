@@ -5,6 +5,7 @@ import java.util.Optional;
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -36,7 +37,7 @@ public class RandomUrlController {
 	}
 
 	@RequestMapping(value = "/key/*", method = RequestMethod.GET)
-	public String resolveUrl(HttpServletRequest request, RedirectAttributes modelUI) {
+	public String resolveUrl(HttpServletRequest request, RedirectAttributes redirectModel, Model modelUI) {
 
 		String url = request.getRequestURI();
 
@@ -44,7 +45,7 @@ public class RandomUrlController {
 
 		if (modelOptional.isEmpty()) {
 
-			errorService.addMessageToModel(modelUI, "Unknown URL.");
+			errorService.addMessageToModel(redirectModel, "Unknown URL.");
 
 			return "redirect:/login";
 		}
@@ -59,7 +60,7 @@ public class RandomUrlController {
 				confirmationService.confirmRegistration(model.getUserDetails().get());
 				randomUrlService.removeDataModel(url);
 
-				infoService.addMessageToModel(modelUI, "Your account has been confirmed, please log in.");
+				infoService.addMessageToModel(redirectModel, "Your account has been confirmed, please log in.");
 
 				return "redirect:/login";
 			case RESET_PASSWORD:
@@ -71,13 +72,13 @@ public class RandomUrlController {
 				dataModel.setUserDetails(model.getUserDetails().get());
 				dataModel.setExtra(url);
 
-				modelUI.addAttribute("requestUrl", randomUrl);
+				modelUI.addAttribute("randomUrl", randomUrl);
 				randomUrlService.bindModelToUrl(randomUrl, dataModel);
 
-				return "redirect:/reset_password_started";
+				return "pages/reset_password_started";
 			default:
 
-				errorService.addMessageToModel(modelUI, "Unknown URL action.");
+				errorService.addMessageToModel(redirectModel, "Unknown URL action.");
 				return "redirect:/login";
 
 		}

@@ -64,7 +64,8 @@ const typescriptConfig = {
     users: "./src/main/ts/users.ts",
     reset_password_started: "./src/main/ts/reset_password_started.ts",
 	errorbox: "./src/main/ts/messages/errorbox.ts",
-	infobox: "./src/main/ts/messages/infobox.ts"
+	infobox: "./src/main/ts/messages/infobox.ts",
+	profile: "./src/main/ts/profile.ts"
   },
   output: {
     filename: '[name].js',
