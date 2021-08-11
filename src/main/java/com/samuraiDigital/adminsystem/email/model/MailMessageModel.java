@@ -39,4 +39,9 @@ public class MailMessageModel {
 		this.text = text;
 	}
 
+	@Override
+	public String toString() {
+		return "MailMessageModel [from=" + from + ", to=" + to + ", subject=" + subject + "]";
+	}
+
 }

@@ -157,7 +157,7 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 	@Override
 	public String toString() {
 		return "UserSecurityDetails [id=" + ((id != null) ? (id) : "Unassigned") + ", username=" + username + ", email="
-				+ email + ", passwordHash=" + passwordHash + ", enabled=" + enabled + ", accountExpirationDate="
+				+ email + ", enabled=" + enabled + ", accountExpirationDate="
 				+ accountExpirationDate + ", credentialsExpirationDate=" + credentialsExpirationDate + ", groups=" + groups + "]";
 	}
 

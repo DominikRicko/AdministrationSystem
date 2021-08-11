@@ -37,4 +37,9 @@ public class UserCredentials {
 		this.password = password;
 	}
 
+	@Override
+	public String toString() {
+		return "UserCredentials [username=" + username + "]";
+	}
+
 }

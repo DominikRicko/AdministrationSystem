@@ -88,8 +88,7 @@ public class UserInfo {
 
 	@Override
 	public String toString() {
-		return "UserInfo [id=" + ((id != null) ? (id) : "Unassigned") + ", name=" + name + ", surname=" + surname
-				+ ", birthdate=" + birthdate + ", address=" + address + "," + "]";
+		return "UserInfo [id=" + ((id != null) ? (id) : "Unassigned") + ", name=" + name + ", surname=" + surname + "]";
 	}
 
 }
