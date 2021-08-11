@@ -1,0 +1,43 @@
+*{
+	box-sizing: border-box;
+	padding: 0;
+	margin: 0;
+}
+
+html, body{
+	min-height: 100%;
+	height: 0px; //for some reason min-height doesn't work for body without this.
+}
+
+img{
+	height: 100%;
+	width: auto;
+}
+
+section.main{
+	margin: auto;
+}
+
+.mainHeader{
+	font-size: xx-large;
+}
+
+.circleImage{
+	border-radius: 50%;
+}
+
+.template{
+	display: none;
+}
+
+@import "./fragments/appbar.scss";
+@import "./fragments/footer.scss";
+@import "./fragments/header.scss";
+@import "./fragments/messagebox.scss";
+
+@import "./pages/login.scss";
+@import "./pages/register.scss";
+@import "./pages/reset_password.scss";
+@import "./pages/users.scss";
+@import "./pages/profile.scss";
+@import "./pages/groups.scss";
