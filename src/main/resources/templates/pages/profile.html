@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+	<meta charset="utf-8">
+	<meta content="IE=edge" http-equiv="X-UA-Compatible">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="http://kendo.cdn.telerik.com/2021.2.616/js/kendo.all.min.js"></script>
+	<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2021.2.616/styles/kendo.common.min.css">
+	<link rel="stylesheet" href="http://unpkg.com/@progress/kendo-theme-bootstrap/dist/all.css" />
+	<title>Admin System | Profile</title>
+	<link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+
+	<!-- Personal info template -->
+	<div id="personalInfo" class="template">
+		<img class="circleImage profileImg" src="/images/img_avatar.png" />
+		<div>#= name # #= surname #</div>
+		<div>Birthdate: #= birthdate #</div>
+		<div>Address: #= address #</div>
+		<div>Email: #= email #</div>
+	</div>
+
+	<!-- Credentials info template -->
+	<div id="credentialsInfo" class="template">
+		<div>Username: #= username #</div>
+		<div>Account expiration date: #= account_expiration_date #</div>
+		<div>Credentials expiration date: #= credentials_expiration_date #</div>
+		<div>Enabled: #= enabled #</div>
+	</div>
+
+	<!-- Groups list template -->
+	<script id="groupsInfo" type="text/x-kendo-template">
+		<ul class="itemList">
+			# for (var i = 0; i < groups.length; i++){ #
+				<li>#= groups[i] #</li>
+			# } #
+		</ul>
+	</script>
+
+	<!-- Privileges list template -->
+	<script id="privilegesInfo" type="text/x-kendo-template">
+		<ul class="itemList">
+			# for (var i = 0; i < privileges.length; i++){ #
+				<li>#= privileges[i] #</li>
+			# } #
+		</ul>
+	</script>
+
+	<div th:replace="/fragments/header :: header" th:remove="tag"></div>
+	<div th:replace="/fragments/errorbox :: errorbox" th:remove="tag"></div>
+	<div th:replace="/fragments/infobox :: infobox" th:remove="tag"></div>
+	<section class="profileMain main">
+
+		<div id="tilelayout"></div>
+		<div id="example"></div>
+	</section>
+	<div th:replace="/fragments/footer :: footer" th:remove="tag"></div>
+
+	<script src="/js/profile.js"></script>
+
+</body>
+
+</html>

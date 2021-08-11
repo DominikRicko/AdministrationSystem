@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+	<meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+	<meta charset="utf-8">
+	<meta content="IE=edge" http-equiv="X-UA-Compatible">
+	<meta content="width=device-width, initial-scale=1" name="viewport">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+	<script src="http://kendo.cdn.telerik.com/2021.2.616/js/kendo.all.min.js"></script>
+	<link rel="stylesheet" href="http://kendo.cdn.telerik.com/2021.2.616/styles/kendo.common.min.css">
+	<link rel="stylesheet" href="http://unpkg.com/@progress/kendo-theme-bootstrap/dist/all.css" />
+	<title>Admin System | Index</title>
+	<link rel="stylesheet" href="/css/style.css">
+
+</head>
+
+<body>
+
+	<div th:replace="/fragments/header :: header" th:remove="tag"></div>
+	<div th:replace="/fragments/errorbox :: errorbox" th:remove="tag"></div>
+	<div th:replace="/fragments/infobox :: infobox" th:remove="tag"></div>
+	<section class="main">
+		<h1 class="mainHeader" >Welcome, <span th:text="${#authentication.name}"></span>.</h1>
+	</section>
+	<div th:replace="/fragments/footer :: footer" th:remove="tag"></div>
+
+	<script src="/js/index.js"></script>
+
+</body>
+
+</html>
