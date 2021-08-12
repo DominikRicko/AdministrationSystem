@@ -8,8 +8,8 @@ import io.swagger.v3.oas.annotations.media.Schema;
 @Schema(name = "Profile", description = "User's profile schema")
 public class ApiProfileResource {
 
-	@Schema(name = "id", type = "Integer", required = true)
-	private Integer id;
+	@Schema(name = "id", type = "String", required = true)
+	private String id;
 
 	@Schema(name = "name", type = "String", required = true)
 	private String name;
@@ -44,11 +44,11 @@ public class ApiProfileResource {
 	@Schema(name = "groups", type = "Collection of Strings", required = false)
 	private Collection<String> groups = new HashSet<>();
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

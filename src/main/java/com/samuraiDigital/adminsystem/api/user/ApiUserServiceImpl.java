@@ -1,6 +1,6 @@
 package com.samuraiDigital.adminsystem.api.user;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Collection;
@@ -103,7 +103,7 @@ public class ApiUserServiceImpl implements ApiUserService {
 	}
 
 	@Override
-	public ApiUserResource getUser(Integer id) {
+	public ApiUserResource getUser(String id) {
 
 		if (id == null)
 			throw new HttpClientErrorException(HttpStatus.BAD_REQUEST, "Did not send an id.");
@@ -137,9 +137,9 @@ public class ApiUserServiceImpl implements ApiUserService {
 		newUserSecurity.setEmail(user.getEmail());
 		newUserSecurity.setUsername(user.getUsername());
 		newUserSecurity.setEnabled(user.getEnabled());
-		newUserSecurity.setAccountExpirationDate(LocalDate.parse(user.getAccount_expiration_date(), dateFormat));
+		newUserSecurity.setAccountExpirationDate(ZonedDateTime.parse(user.getAccount_expiration_date(), dateFormat));
 		newUserSecurity
-		.setCredentialsExpirationDate(LocalDate.from(dateFormat.parse(user.getCredentials_expiration_date())));
+		.setCredentialsExpirationDate(ZonedDateTime.from(dateFormat.parse(user.getCredentials_expiration_date())));
 		newUserSecurity.setGroups(groups);
 
 		try {
@@ -149,7 +149,7 @@ public class ApiUserServiceImpl implements ApiUserService {
 			newUserInfo.setUserSecurity(newUserSecurity);
 			newUserSecurity.setUser(newUserInfo);
 
-			newUserInfo.setBirthdate(LocalDate.from(dateFormat.parse(user.getBirthdate())));
+			newUserInfo.setBirthdate(ZonedDateTime.from(dateFormat.parse(user.getBirthdate())));
 			newUserInfo.setName(user.getName());
 			newUserInfo.setSurname(user.getSurname());
 
@@ -173,7 +173,7 @@ public class ApiUserServiceImpl implements ApiUserService {
 	}
 
 	@Override
-	public void deleteUserById(Integer id) {
+	public void deleteUserById(String id) {
 
 		try {
 			userInfoRepository.deleteById(id);
@@ -185,7 +185,7 @@ public class ApiUserServiceImpl implements ApiUserService {
 	}
 
 	@Override
-	public ApiUserResource updateUser(Integer id, ApiUserResource user) {
+	public ApiUserResource updateUser(String id, ApiUserResource user) {
 		Optional<UserSecurityDetails> userFromRepo = userDetailsRepository.findById(user.getId());
 
 		if (userFromRepo.isEmpty()) {
@@ -194,9 +194,9 @@ public class ApiUserServiceImpl implements ApiUserService {
 		}
 
 		UserSecurityDetails userSecurity = userFromRepo.get();
-		userSecurity.setAccountExpirationDate(LocalDate.from(dateFormat.parse(user.getAccount_expiration_date())));
+		userSecurity.setAccountExpirationDate(ZonedDateTime.from(dateFormat.parse(user.getAccount_expiration_date())));
 		userSecurity
-		.setCredentialsExpirationDate(LocalDate.from(dateFormat.parse(user.getCredentials_expiration_date())));
+		.setCredentialsExpirationDate(ZonedDateTime.from(dateFormat.parse(user.getCredentials_expiration_date())));
 		userSecurity.setEmail(user.getEmail());
 		userSecurity.setUsername(user.getUsername());
 		userSecurity.setEnabled(user.getEnabled());
@@ -216,7 +216,7 @@ public class ApiUserServiceImpl implements ApiUserService {
 
 		userInfo.setName(user.getName());
 		userInfo.setSurname(user.getSurname());
-		userInfo.setBirthdate(LocalDate.from(dateFormat.parse(user.getBirthdate())));
+		userInfo.setBirthdate(ZonedDateTime.from(dateFormat.parse(user.getBirthdate())));
 
 		try {
 			userInfoRepository.save(userInfo);

@@ -6,12 +6,12 @@ public interface ApiGroupService {
 
 	Collection<ApiGroupResource> getGroups();
 
-	ApiGroupResource getGroup(Integer id);
+	ApiGroupResource getGroup(String id);
 
 	ApiGroupResource createGroup(ApiGroupResource group);
 
-	ApiGroupResource updateGroup(Integer id, ApiGroupResource newGroup);
+	ApiGroupResource updateGroup(String id, ApiGroupResource newGroup);
 
-	void deleteGroup(Integer id);
+	void deleteGroup(String id);
 
 }
