@@ -77,12 +77,12 @@ GRANT SELECT, INSERT, UPDATE, DELETE ON dev.* to 'dev_user'@'localhost';
 GRANT SELECT, INSERT, UPDATE, DELETE ON dev.* to 'dev_user'@'%';
 
 INSERT INTO `authority` (`id`, `name`, `description`) VALUES
-(1,	'read_profiles',	'Authority to be able to read other users profiles.'),
-(2,	'read_groups',	'Authority used to see all groups.'),
-(3,	'read_privileges ',	'Authority to see all authorities.'),
-(4,	'write_profiles',	'Authority to be able to write and update any user profile.'),
-(5,	'write_groups',	'Authority used to create and update groups.'),
-(6,	'write_privileges',	'Authority used to create new privileges.');
+(1,	'READ_PROFILES',	'Authority to be able to read other users profiles.'),
+(2,	'READ_GROUPS',	'Authority used to see all groups.'),
+(3,	'READ_PRIVILEGES ',	'Authority to see all authorities.'),
+(4,	'WRITE_PROFILES',	'Authority to be able to write and update any user profile.'),
+(5,	'WRITE_GROUPS',	'Authority used to create and update groups.'),
+(6,	'WRITE_PRIVILEGES',	'Authority used to create new privileges.');
 
 INSERT INTO `security_group` (`id`, `name`) VALUES
 (1,	'Admins'),

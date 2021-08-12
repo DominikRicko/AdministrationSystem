@@ -10,7 +10,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 public class ApiUserResource {
 
 	@Schema(name = "Id", description = "Unique identifier for user", required = true)
-	private Integer id;
+	private String id;
 
 	@Schema(name = "Name", required = true)
 	private String name;
@@ -43,7 +43,7 @@ public class ApiUserResource {
 		super();
 	}
 
-	public ApiUserResource(Integer id, String name, String surname, String birthdate, Collection<String> groups,
+	public ApiUserResource(String id, String name, String surname, String birthdate, Collection<String> groups,
 			String email, String username, Boolean enabled, String account_expiration_date,
 			String credentials_expiration_date) {
 		super();
@@ -59,11 +59,11 @@ public class ApiUserResource {
 		this.credentials_expiration_date = credentials_expiration_date;
 	}
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

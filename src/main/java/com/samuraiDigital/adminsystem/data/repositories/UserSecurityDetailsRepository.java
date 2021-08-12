@@ -6,7 +6,7 @@ import org.springframework.data.repository.CrudRepository;
 
 import com.samuraiDigital.adminsystem.data.model.UserSecurityDetails;
 
-public interface UserSecurityDetailsRepository extends CrudRepository<UserSecurityDetails, Integer> {
+public interface UserSecurityDetailsRepository extends CrudRepository<UserSecurityDetails, String> {
 
 	Optional<UserSecurityDetails> findByUsername(String username);
 

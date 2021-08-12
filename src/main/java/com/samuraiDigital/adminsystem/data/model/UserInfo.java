@@ -1,36 +1,29 @@
 package com.samuraiDigital.adminsystem.data.model;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
-
-@Entity
+@Document
 public class UserInfo {
 
 	@Id
-	private Integer id;
+	private String id;
 	private String name;
 	private String surname;
-	private LocalDate birthdate;
+	private ZonedDateTime birthdate;
 	private String address;
 
-	@OneToOne(fetch = FetchType.EAGER)
-	@PrimaryKeyJoinColumn
-	@Cascade(CascadeType.ALL)
+	@DBRef(lazy = true)
 	private UserSecurityDetails userSecurity = new UserSecurityDetails();
 
 	public UserInfo() {
 		super();
 	}
 
-	public UserInfo(String name, String surname, LocalDate birthdate, String address) {
+	public UserInfo(String name, String surname, ZonedDateTime birthdate, String address) {
 		super();
 		this.name = name;
 		this.surname = surname;
@@ -38,11 +31,11 @@ public class UserInfo {
 		this.address = address;
 	}
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -62,11 +55,11 @@ public class UserInfo {
 		this.surname = surname;
 	}
 
-	public LocalDate getBirthdate() {
+	public ZonedDateTime getBirthdate() {
 		return birthdate;
 	}
 
-	public void setBirthdate(LocalDate birthdate) {
+	public void setBirthdate(ZonedDateTime birthdate) {
 		this.birthdate = birthdate;
 	}
 

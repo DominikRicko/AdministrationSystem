@@ -1,6 +1,6 @@
 package com.samuraiDigital.adminsystem.web.services;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Optional;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -71,7 +71,7 @@ public class PasswordResetServiceImpl implements PasswordResetService {
 	public void resetPassword(UserSecurityDetails user, String newPassword) {
 
 		user.setPasswordHash(encoder.encode(newPassword));
-		user.setCredentialsExpirationDate(LocalDate.now().plusMonths(1));
+		user.setCredentialsExpirationDate(ZonedDateTime.now().plusMonths(1));
 		detailsRepository.save(user);
 
 	}

@@ -36,7 +36,7 @@ public class ApiGroupController {
 
 	@RequestMapping(method = RequestMethod.GET, path = "/{id}")
 	@PreAuthorize("hasAuthority('READ_GROUPS')")
-	public ResponseEntity<?> getGroupMembers(@PathParam("id") Integer groupId) {
+	public ResponseEntity<?> getGroupMembers(@PathParam("id") String groupId) {
 
 		return new ResponseEntity<>(groupService.getGroup(groupId), HttpStatus.OK);
 
@@ -44,7 +44,7 @@ public class ApiGroupController {
 
 	@RequestMapping(method = RequestMethod.PUT, path = "/{id}")
 	@PreAuthorize("hasAuthority('WRITE_GROUPS')")
-	public ResponseEntity<?> updateGroup(@PathParam("id") Integer groupId, @RequestParam ApiGroupResource group) {
+	public ResponseEntity<?> updateGroup(@PathParam("id") String groupId, @RequestParam ApiGroupResource group) {
 
 		return new ResponseEntity<>(groupService.updateGroup(groupId, group), HttpStatus.OK);
 
@@ -60,7 +60,7 @@ public class ApiGroupController {
 
 	@RequestMapping(method = RequestMethod.DELETE, path = "/{id}")
 	@PreAuthorize("hasAuthority('WRITE_GROUPS')")
-	public ResponseEntity<?> deleteGroup(@PathParam("id") Integer groupId) {
+	public ResponseEntity<?> deleteGroup(@PathParam("id") String groupId) {
 
 		groupService.deleteGroup(groupId);
 

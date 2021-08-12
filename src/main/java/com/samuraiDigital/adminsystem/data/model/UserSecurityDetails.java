@@ -1,28 +1,18 @@
 package com.samuraiDigital.adminsystem.data.model;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.PrimaryKeyJoinColumn;
-
-import org.hibernate.annotations.Cascade;
-import org.hibernate.annotations.CascadeType;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 
-@Entity
+@Document
 public class UserSecurityDetails implements org.springframework.security.core.userdetails.UserDetails {
 
 	/**
@@ -30,22 +20,18 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 	 */
 	private static final long serialVersionUID = 1L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private String id;
 	private String username;
 	private String email;
 	private String passwordHash;
 	private Boolean enabled;
-	private LocalDate accountExpirationDate;
-	private LocalDate credentialsExpirationDate;
+	private ZonedDateTime accountExpirationDate;
+	private ZonedDateTime credentialsExpirationDate;
 
-	@OneToOne(mappedBy = "userSecurity")
-	@PrimaryKeyJoinColumn
+	@DBRef(lazy = false)
 	private UserInfo user;
 
-	@ManyToMany(fetch = FetchType.EAGER)
-	@JoinTable(name = "group_members", joinColumns = @JoinColumn(name = "id_user"), inverseJoinColumns = @JoinColumn(name = "id_group"))
-	@Cascade(CascadeType.ALL)
+	@DBRef(lazy = false)
 	private Set<SecurityGroup> groups = new HashSet<>();
 
 	public UserSecurityDetails() {
@@ -72,7 +58,7 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 
 	@Override
 	public boolean isAccountNonExpired() {
-		return this.accountExpirationDate.isAfter(LocalDate.now());
+		return this.accountExpirationDate.isAfter(ZonedDateTime.now());
 	}
 
 	@Override
@@ -82,7 +68,7 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 
 	@Override
 	public boolean isCredentialsNonExpired() {
-		return this.credentialsExpirationDate.isAfter(LocalDate.now());
+		return this.credentialsExpirationDate.isAfter(ZonedDateTime.now());
 	}
 
 	@Override
@@ -90,11 +76,11 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 		return this.enabled;
 	}
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -106,19 +92,19 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 		this.passwordHash = passwordHash;
 	}
 
-	public LocalDate getAccountExpirationDate() {
+	public ZonedDateTime getAccountExpirationDate() {
 		return accountExpirationDate;
 	}
 
-	public void setAccountExpirationDate(LocalDate accountExpirationDate) {
+	public void setAccountExpirationDate(ZonedDateTime accountExpirationDate) {
 		this.accountExpirationDate = accountExpirationDate;
 	}
 
-	public LocalDate getCredentialsExpirationDate() {
+	public ZonedDateTime getCredentialsExpirationDate() {
 		return credentialsExpirationDate;
 	}
 
-	public void setCredentialsExpirationDate(LocalDate credentialsExpirationDate) {
+	public void setCredentialsExpirationDate(ZonedDateTime credentialsExpirationDate) {
 		this.credentialsExpirationDate = credentialsExpirationDate;
 	}
 
@@ -158,7 +144,7 @@ public class UserSecurityDetails implements org.springframework.security.core.us
 	public String toString() {
 		return "UserSecurityDetails [id=" + ((id != null) ? (id) : "Unassigned") + ", username=" + username + ", email="
 				+ email + ", enabled=" + enabled + ", accountExpirationDate="
-				+ accountExpirationDate + ", credentialsExpirationDate=" + credentialsExpirationDate + ", groups=" + groups + "]";
+				+ accountExpirationDate + ", credentialsExpirationDate=" + credentialsExpirationDate + "]";
 	}
 
 

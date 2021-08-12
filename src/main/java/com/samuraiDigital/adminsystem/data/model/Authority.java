@@ -3,20 +3,12 @@ package com.samuraiDigital.adminsystem.data.model;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.Lob;
-import javax.persistence.ManyToMany;
-
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.DBRef;
+import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
 
-@Entity
+@Document
 public class Authority implements GrantedAuthority {
 
 	/**
@@ -25,17 +17,13 @@ public class Authority implements GrantedAuthority {
 	private static final long serialVersionUID = 1L;
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer id;
+	private String id;
 
 	private String name;
 
-	@Lob
-	@Column(columnDefinition = "TEXT")
 	private String description;
 
-	@ManyToMany(fetch = FetchType.LAZY)
-	@JoinTable(name = "group_authority", joinColumns = @JoinColumn(name = "id_authority"), inverseJoinColumns = @JoinColumn(name = "id_group"))
+	@DBRef(lazy = true)
 	private Set<SecurityGroup> groups = new HashSet<SecurityGroup>();
 
 	public Authority() {
@@ -48,11 +36,11 @@ public class Authority implements GrantedAuthority {
 		this.description = description;
 	}
 
-	public Integer getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
