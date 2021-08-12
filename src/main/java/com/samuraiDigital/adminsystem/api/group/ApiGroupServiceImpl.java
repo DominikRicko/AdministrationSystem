@@ -69,7 +69,7 @@ public class ApiGroupServiceImpl implements ApiGroupService {
 	}
 
 	@Override
-	public ApiGroupResource getGroup(Integer id) {
+	public ApiGroupResource getGroup(String id) {
 
 		Optional<SecurityGroup> groupOptional = groupRepository.findById(id);
 
@@ -88,7 +88,7 @@ public class ApiGroupServiceImpl implements ApiGroupService {
 	}
 
 	@Override
-	public ApiGroupResource updateGroup(Integer id, ApiGroupResource newGroup) {
+	public ApiGroupResource updateGroup(String id, ApiGroupResource newGroup) {
 
 		Optional<SecurityGroup> groupOptional = groupRepository.findById(id);
 
@@ -102,7 +102,7 @@ public class ApiGroupServiceImpl implements ApiGroupService {
 	}
 
 	@Override
-	public void deleteGroup(Integer id) {
+	public void deleteGroup(String id) {
 
 		groupRepository.deleteById(id);
 

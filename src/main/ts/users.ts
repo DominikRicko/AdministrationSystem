@@ -5,9 +5,6 @@ function parseDate(input: any) {
 
 		if (input[key] instanceof Date) {
 
-			const day = (input[key] as Date).getDate();
-			(input[key] as Date).setUTCHours(0, 0, 0, 0);
-			(input[key] as Date).setDate(day);
 			input[key] = (input[key] as Date).toISOString();
 		}
 	}

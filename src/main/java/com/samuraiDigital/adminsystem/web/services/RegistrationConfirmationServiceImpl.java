@@ -1,6 +1,6 @@
 package com.samuraiDigital.adminsystem.web.services;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 
 import org.springframework.stereotype.Service;
 
@@ -64,7 +64,7 @@ public class RegistrationConfirmationServiceImpl implements RegistrationConfirma
 	public void confirmRegistration(UserSecurityDetails user) {
 
 		user.setEnabled(true);
-		user.setAccountExpirationDate(LocalDate.now().plusMonths(1));
+		user.setAccountExpirationDate(ZonedDateTime.now().plusMonths(1));
 		detailsRepository.save(user);
 
 	}

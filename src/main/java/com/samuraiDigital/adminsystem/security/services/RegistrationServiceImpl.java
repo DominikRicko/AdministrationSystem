@@ -1,6 +1,6 @@
 package com.samuraiDigital.adminsystem.security.services;
 
-import java.time.LocalDateTime;
+import java.time.ZonedDateTime;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -30,8 +30,8 @@ public class RegistrationServiceImpl implements RegistrationService {
 		newUser.setUsername(userCredentials.getUsername());
 		newUser.setPasswordHash(encoder.encode(userCredentials.getPassword()));
 		newUser.setEnabled(false);
-		newUser.setAccountExpirationDate(LocalDateTime.now().plusDays(30).toLocalDate());
-		newUser.setCredentialsExpirationDate(LocalDateTime.now().plusDays(30).toLocalDate());
+		newUser.setAccountExpirationDate(ZonedDateTime.now().plusMonths(1));
+		newUser.setCredentialsExpirationDate(ZonedDateTime.now().plusMonths(1));
 
 		return userRepository.save(newUser);
 

@@ -41,5 +41,6 @@ src/main/resources/static/css
 
 ### Generated dependency programs ###
 /MySQL
+/MongoDB
 rabbitmq/data
 rabbitmq/logs
