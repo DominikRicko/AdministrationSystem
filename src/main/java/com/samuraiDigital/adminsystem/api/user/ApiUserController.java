@@ -46,7 +46,7 @@ public class ApiUserController {
 			@ApiResponse(responseCode = "400", description = "Did not receive an id", content = @Content(mediaType = "none")),
 	})
 	@PreAuthorize("hasAuthority('WRITE_PROFILES')")
-	public ResponseEntity<?> getUser(@PathVariable @Parameter Integer id) {
+	public ResponseEntity<?> getUser(@PathVariable @Parameter String id) {
 
 		ApiUserResource user = resourceService.getUser(id);
 
@@ -75,7 +75,7 @@ public class ApiUserController {
 			@ApiResponse(responseCode = "204", description = "User successfully deleted.", content = @Content(mediaType = "none")),
 			@ApiResponse(responseCode = "404", description = "User not found.", content = @Content(mediaType = "none")) })
 	@PreAuthorize("hasAuthority('WRITE_PROFILES')")
-	public ResponseEntity<?> removeUser(@PathVariable @Parameter Integer userId) {
+	public ResponseEntity<?> removeUser(@PathVariable @Parameter String userId) {
 
 		resourceService.deleteUserById(userId);
 		return new ResponseEntity<>(null, HttpStatus.NO_CONTENT);
@@ -89,7 +89,7 @@ public class ApiUserController {
 			@ApiResponse(responseCode = "418", description = "User could not be updated, check username and email.", content = @Content(mediaType = "none")),
 			@ApiResponse(responseCode = "422", description = "Failed creating a user.") })
 	@PreAuthorize("hasAuthority('WRITE_PROFILES')")
-	public ResponseEntity<?> updateUser(@PathVariable @Parameter Integer userId, ApiUserResource user) {
+	public ResponseEntity<?> updateUser(@PathVariable @Parameter String userId, ApiUserResource user) {
 
 		ApiUserResource newUserResource = resourceService.updateUser(userId, user);
 

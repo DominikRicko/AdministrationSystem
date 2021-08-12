@@ -5,12 +5,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.annotation.ComponentScan;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
+import org.springframework.data.mongodb.repository.config.EnableMongoRepositories;
 import org.thymeleaf.extras.springsecurity5.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring5.SpringTemplateEngine;
 
 @SpringBootApplication()
-@EnableJpaRepositories("com.samuraiDigital.adminsystem.data.repositories")
+@EnableMongoRepositories("com.samuraiDigital.adminsystem.data.repositories")
 @EntityScan("com.samuraiDigital.adminsystem.data.model")
 @ComponentScan({ "com.samuraiDigital.adminsystem" })
 public class AdminSystemApplication {

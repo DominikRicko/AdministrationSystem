@@ -6,12 +6,12 @@ public interface ApiUserService {
 
 	Collection<ApiUserResource> getUsers();
 
-	ApiUserResource getUser(Integer id);
+	ApiUserResource getUser(String id);
 
 	ApiUserResource saveUser(ApiUserResource user);
 
-	ApiUserResource updateUser(Integer id, ApiUserResource user);
+	ApiUserResource updateUser(String id, ApiUserResource user);
 
-	void deleteUserById(Integer id);
+	void deleteUserById(String id);
 
 }

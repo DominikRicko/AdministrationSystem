@@ -1,6 +1,6 @@
 package com.samuraiDigital.adminsystem.api.profile;
 
-import java.time.LocalDate;
+import java.time.ZonedDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -32,8 +32,8 @@ public class ApiProfileServiceImpl implements ApiProfileService {
 		userProfile.setId(user.getId());
 		userProfile.setUsername(user.getUsername());
 		userProfile.setEmail(user.getEmail());
-		userProfile.setAccount_expiration_date(user.getAccountExpirationDate().toString());
-		userProfile.setCredentials_expiration_date(user.getCredentialsExpirationDate().toString());
+		userProfile.setAccount_expiration_date(user.getAccountExpirationDate().toLocalDate().toString());
+		userProfile.setCredentials_expiration_date(user.getCredentialsExpirationDate().toLocalDate().toString());
 		userProfile.setEnabled(user.isEnabled());
 		userProfile.setGroups(user.getGroups().stream().map(it -> it.getName()).collect(Collectors.toSet()));
 		userProfile.setPrivileges(user.getAuthorities().stream().map(it -> it.getAuthority()).collect(Collectors.toSet()));
@@ -47,7 +47,7 @@ public class ApiProfileServiceImpl implements ApiProfileService {
 			userProfile.setName(userInfo.getName());
 			userProfile.setSurname(userInfo.getSurname());
 			userProfile.setAddress(userInfo.getAddress());
-			userProfile.setBirthdate(userInfo.getBirthdate().toString());
+			userProfile.setBirthdate(userInfo.getBirthdate().toLocalDate().toString());
 
 		}
 
@@ -71,13 +71,13 @@ public class ApiProfileServiceImpl implements ApiProfileService {
 			UserInfo userInfo = userInfoOptional.get();
 
 			userInfo.setAddress(user.getAddress());
-			userInfo.setBirthdate(LocalDate.parse(user.getBirthdate(), dateFormat));
+			userInfo.setBirthdate(ZonedDateTime.parse(user.getBirthdate(), dateFormat));
 			userInfo.setName(user.getName());
 			userInfo.setSurname(user.getSurname());
 		}
 
-		userDetails.setAccountExpirationDate(LocalDate.parse(user.getAccount_expiration_date(), dateFormat));
-		userDetails.setCredentialsExpirationDate(LocalDate.parse(user.getCredentials_expiration_date(), dateFormat));
+		userDetails.setAccountExpirationDate(ZonedDateTime.parse(user.getAccount_expiration_date(), dateFormat));
+		userDetails.setCredentialsExpirationDate(ZonedDateTime.parse(user.getCredentials_expiration_date(), dateFormat));
 		userDetails.setEmail(user.getEmail());
 		userDetails.setEnabled(user.getEnabled());
 		userDetails.setGroups(user.getGroups().stream().map(it -> new SecurityGroup(it)).collect(Collectors.toSet()));
